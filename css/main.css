@@ -281,7 +281,7 @@ pre {
     --note-danger-color: #925346;
     --around-shadow-style: none;
     --tag-shadow-style: none;
-    --image-filter-style: brightness(0.6) contrast(1.2);
+    --image-filter-style: brightness(0.8) contrast(1);
   }
 }
 [data-user-color-scheme='dark'] {
@@ -317,7 +317,7 @@ pre {
   --note-danger-color: #925346;
   --around-shadow-style: none;
   --tag-shadow-style: none;
-  --image-filter-style: brightness(0.6) contrast(1.2);
+  --image-filter-style: brightness(0.8) contrast(1);
 }
 code,
 pre {

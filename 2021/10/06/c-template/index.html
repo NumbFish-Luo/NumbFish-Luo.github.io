@@ -168,14 +168,13 @@
     
     
     <span class="dot"></span>
-    <span>1.2k 字</span>
+    <span>712 字</span>
     
   </div>
   
   </header>
   <div id="section" class="post-content">
-    <h2 id="0-faq"><a class="markdownIt-Anchor" href="#0-faq"></a> 0. FAQ</h2>
-<ul>
+    <h2 id="0-FAQ"><a href="#0-FAQ" class="headerlink" title="0. FAQ"></a>0. FAQ</h2><ul>
 <li><strong>Q: 为什么要用模板？</strong></li>
 <li>A: 为了解决函数重载问题。例如，在C++中，我们要比较两个int型变量的哪个大，并返回其中较大的值，可能会写这样的函数：</li>
 </ul>
@@ -211,13 +210,11 @@ T <span class="token function">Max</span><span class="token punctuation">(</span
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <ul>
 <li><strong>Q: 道理我都懂，有C++了，为什么还要用C实现模板？</strong></li>
-<li>A: 虽然一般情况下都能直接写C<ins>来代替C程序啦，不过确实存在无法使用C</ins>的场合。很不幸，我（曾经的）工作所用的语言只能是C，于是，之前用惯了C++的我决定探索一下如何用C实现模板- -+</li>
+<li>A: 虽然一般情况下都能直接写C++来代替C程序啦，不过确实存在无法使用C++的场合。很不幸，我（曾经的）工作所用的语言只能是C，于是，之前用惯了C++的我决定探索一下如何用C实现模板- -+</li>
 <li><strong>Q: 这篇文章我好像在哪里见过？</strong></li>
 <li>A: 这篇文章原本是上传到了CSDN上，现在拿来放到自己的个人网站。</li>
 </ul>
-<h2 id="1-目前个人写法风格"><a class="markdownIt-Anchor" href="#1-目前个人写法风格"></a> 1. 目前个人写法风格</h2>
-<h3 id="10-模板函数"><a class="markdownIt-Anchor" href="#10-模板函数"></a> 1.0 模板函数</h3>
-<p>首先，用前面的Max函数为例，先看一下我目前的写法风格吧:-P</p>
+<h2 id="1-目前个人写法风格"><a href="#1-目前个人写法风格" class="headerlink" title="1. 目前个人写法风格"></a>1. 目前个人写法风格</h2><h3 id="1-0-模板函数"><a href="#1-0-模板函数" class="headerlink" title="1.0 模板函数"></a>1.0 模板函数</h3><p>首先，用前面的Max函数为例，先看一下我目前的写法风格吧:-P</p>
 <p><strong>需要注意的是：为防止宏嵌套出错，例如<code>_Max(Pair(int, char))</code>会被拓展成<code>Max$_Pair(int, char)_$</code>这样的不合法变量名（Pair的定义见1.1模板类示例），我们都需要多写一个类似于<code>#define Max(T) _Max(T)</code>这样的操作</strong></p>
 <pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">define</span> <span class="token macro-name function">_Max</span><span class="token expression"><span class="token punctuation">(</span>T<span class="token punctuation">)</span> Max$_</span><span class="token punctuation">##</span><span class="token expression">T</span><span class="token punctuation">##</span><span class="token expression">_$</span></span>
 <span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">define</span> <span class="token macro-name function">Max</span><span class="token expression"><span class="token punctuation">(</span>T<span class="token punctuation">)</span> <span class="token function">_Max</span><span class="token punctuation">(</span>T<span class="token punctuation">)</span></span></span>
@@ -235,28 +232,18 @@ T <span class="token function">Max</span><span class="token punctuation">(</span
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>下面解释一下上面的代码到底做了什么：</p>
 <ul>
-<li>
-<p><strong>用宏来模仿C++的写法 —— <code>#define _Max(T) Max$_##T##_$</code></strong><br />
-这里用了<code>Max(T)</code>宏来模仿C++的<code>Max&lt;T&gt;</code>写法。</p>
-<p>例如：<code>Max(int)</code>，宏拓展后实际上等于<code>Max$_int_$</code>（<code>$</code>符号确实是合法变量名），这里用<code>$_</code>表示C++中模板的尖括号左侧<code>&lt;</code>，用<code>_$</code>表示尖括号右侧<code>&gt;</code></p>
+<li><p><strong>用宏来模仿C++的写法 —— <code>#define _Max(T) Max$_##T##_$</code></strong><br>这里用了<code>Max(T)</code>宏来模仿C++的<code>Max&lt;T&gt;</code>写法。</p>
+<p>例如：<code>Max(int)</code>，宏拓展后实际上等于<code>Max$_int_$</code>（<script type="math/tex">`符号确实是合法变量名），这里用`$_`表示C++中模板的尖括号左侧`<`，用`_</script>表示尖括号右侧<code>&gt;</code></p>
 </li>
-<li>
-<p><strong>模板实现 —— <code>#define _Max_IMPL(T) T Max(T a, T b) &#123; return a &gt; b ? a : b; &#125;</code></strong><br />
-相当于C++的<code>template &lt;typename T&gt; T Max(T a, T b) &#123; return a &gt; b ? a : b; &#125;</code></p>
+<li><p><strong>模板实现 —— <code>#define _Max_IMPL(T) T Max(T a, T b) &#123; return a &gt; b ? a : b; &#125;</code></strong><br>相当于C++的<code>template &lt;typename T&gt; T Max(T a, T b) &#123; return a &gt; b ? a : b; &#125;</code></p>
 </li>
-<li>
-<p><strong>实例化模板 —— <code>Max_IMPL(int);</code></strong><br />
-由于C不是C++，所以需要使用者自己去实例化对应的模板类型，此处宏拓展出来的代码为<code>int Max(int)(int a, int b) &#123; return a &gt; b ? a : b; &#125;</code>，然后<code>Max(int)</code>再拓展为<code>Max$_int_$</code>，于是最终结果为：<br />
-<strong><code>int Max$_int_$(int a, int b) &#123; return a &gt; b ? a : b; &#125;</code></strong></p>
+<li><p><strong>实例化模板 —— <code>Max_IMPL(int);</code></strong><br>由于C不是C++，所以需要使用者自己去实例化对应的模板类型，此处宏拓展出来的代码为<code>int Max(int)(int a, int b) &#123; return a &gt; b ? a : b; &#125;</code>，然后<code>Max(int)</code>再拓展为<code>Max$_int_$</code>，于是最终结果为：<br><strong><code>int Max$_int_$(int a, int b) &#123; return a &gt; b ? a : b; &#125;</code></strong></p>
 </li>
-<li>
-<p><strong>使用 —— <code>Max(int)(123, 456)</code></strong><br />
-相当于C++的<code>Max&lt;int&gt;(123, 456)</code></p>
+<li><p><strong>使用 —— <code>Max(int)(123, 456)</code></strong><br>相当于C++的<code>Max&lt;int&gt;(123, 456)</code></p>
 </li>
 </ul>
 <p>像这样，我们就实现了一个<code>T Max&lt;T&gt;(T, T)</code>模板函数了！在此基础上，我们可以更进一步：如果能做一个<strong>检测代码</strong>中Max使用了哪些<strong>模板类型</strong>，然后在<strong>编译前</strong>自动添加实现Max_IMPL(…)完成“实例化”的程序，就可以完成类似于C++的模板类型推断功能了- -+</p>
-<h3 id="11-模板类"><a class="markdownIt-Anchor" href="#11-模板类"></a> 1.1 模板类</h3>
-<p>模板类同理，我们以简单的Pair为例（保存两个类型数据的结构）</p>
+<h3 id="1-1-模板类"><a href="#1-1-模板类" class="headerlink" title="1.1 模板类"></a>1.1 模板类</h3><p>模板类同理，我们以简单的Pair为例（保存两个类型数据的结构）</p>
 <pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">define</span> <span class="token macro-name function">_Pair</span><span class="token expression"><span class="token punctuation">(</span>T1<span class="token punctuation">,</span> T2<span class="token punctuation">)</span> Pair$_</span><span class="token punctuation">##</span><span class="token expression">T1</span><span class="token punctuation">##</span><span class="token expression">_$$_</span><span class="token punctuation">##</span><span class="token expression">T2</span><span class="token punctuation">##</span><span class="token expression">_$</span></span>
 <span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">define</span> <span class="token macro-name function">Pair</span><span class="token expression"><span class="token punctuation">(</span>T1<span class="token punctuation">,</span> T2<span class="token punctuation">)</span> <span class="token function">_Pair</span><span class="token punctuation">(</span>T1<span class="token punctuation">,</span> T2<span class="token punctuation">)</span></span></span>
 
@@ -276,18 +263,13 @@ T <span class="token function">Max</span><span class="token punctuation">(</span
     <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <ul>
-<li><strong><code>#define _Pair(T1, T2) Pair$_##T1##_$$_##T2##_$</code></strong><br />
-用<code>Pair(T1, T2)</code>模仿C++中<code>Pair&lt;T1, T2&gt;</code>的写法</li>
-<li><strong><code>#define _Pair_IMPL(T1, T2) typedef struct Pair(T1, T2) &#123; T1 t1; T2 t2; &#125; Pair(T1, T2)</code></strong><br />
-相当于<code>template&lt;typename T1, typename T2&gt; struct Pair&#123; T1 t1; T2 t2; &#125;</code></li>
-<li><strong><code>Pair_IMPL(int, char);</code></strong><br />
-实例化<code>Pair&lt;int, char&gt;</code>，此处宏拓展的最终结果为：<br />
-<code>typedef struct &#123; int t1; char t2; &#125; Pair$_int_$$_char_$</code></li>
-<li><strong><code>Pair(int, char) p_ic;</code></strong><br />
-相当于<code>Pair&lt;int, char&gt; p_ic;</code></li>
+<li><strong><code>#define _Pair(T1, T2) Pair$_##T1##_$$_##T2##_$</code></strong><br>用<code>Pair(T1, T2)</code>模仿C++中<code>Pair&lt;T1, T2&gt;</code>的写法</li>
+<li><strong><code>#define _Pair_IMPL(T1, T2) typedef struct Pair(T1, T2) &#123; T1 t1; T2 t2; &#125; Pair(T1, T2)</code></strong><br>相当于<code>template&lt;typename T1, typename T2&gt; struct Pair&#123; T1 t1; T2 t2; &#125;</code></li>
+<li><strong><code>Pair_IMPL(int, char);</code></strong><br>实例化<code>Pair&lt;int, char&gt;</code>，此处宏拓展的最终结果为：<br><code>typedef struct &#123; int t1; char t2; &#125; Pair$_int_$$_char_$</code></li>
+<li><strong><code>Pair(int, char) p_ic;</code></strong><br>相当于<code>Pair&lt;int, char&gt; p_ic;</code></li>
 </ul>
 <p>像这样，我们就完成了简单的<code>Pair&lt;T1, T2&gt;</code>模板类了</p>
-<hr />
+<hr>
 <p>参考资料：C语言宏高级用法 <a target="_blank" rel="noopener" href="https://www.cnblogs.com/alantu2018/p/8465911.html">https://www.cnblogs.com/alantu2018/p/8465911.html</a></p>
 
   </div>
@@ -304,12 +286,12 @@ T <span class="token function">Max</span><span class="token punctuation">(</span
 <div class="nav">
   
   <div class="nav-item-prev">
-    <a href="/2022/02/22/urp-custom-post-effect/" class="nav-link">
+    <a href="/2022/02/22/dimensional-cut/" class="nav-link">
       <i class="iconfont icon-left nav-prev-icon"></i>
       <div>
         <div class="nav-label">上一篇</div>
         
-        <div class="nav-title">URP自定义后处理特效第零篇：前期准备 </div>
+        <div class="nav-title">URP自定义后处理特效第一篇：次元斩！ </div>
         
       </div>
     </a>
@@ -332,7 +314,7 @@ T <span class="token function">Max</span><span class="token punctuation">(</span
 
 <div class="card card-content toc-card" id="mobiletoc">
   <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
-<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#0-faq"><span class="toc-text"> 0. FAQ</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E7%9B%AE%E5%89%8D%E4%B8%AA%E4%BA%BA%E5%86%99%E6%B3%95%E9%A3%8E%E6%A0%BC"><span class="toc-text"> 1. 目前个人写法风格</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#10-%E6%A8%A1%E6%9D%BF%E5%87%BD%E6%95%B0"><span class="toc-text"> 1.0 模板函数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#11-%E6%A8%A1%E6%9D%BF%E7%B1%BB"><span class="toc-text"> 1.1 模板类</span></a></li></ol></li></ol>
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#0-FAQ"><span class="toc-text">0. FAQ</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E7%9B%AE%E5%89%8D%E4%B8%AA%E4%BA%BA%E5%86%99%E6%B3%95%E9%A3%8E%E6%A0%BC"><span class="toc-text">1. 目前个人写法风格</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-0-%E6%A8%A1%E6%9D%BF%E5%87%BD%E6%95%B0"><span class="toc-text">1.0 模板函数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1-%E6%A8%A1%E6%9D%BF%E7%B1%BB"><span class="toc-text">1.1 模板类</span></a></li></ol></li></ol>
 </div></main>
           <aside class="left-column">
             
@@ -365,7 +347,7 @@ T <span class="token function">Max</span><span class="token punctuation">(</span
   <article class="display-when-two-columns spacer">
     <div class="card card-content toc-card">
       <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
-<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#0-faq"><span class="toc-text"> 0. FAQ</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E7%9B%AE%E5%89%8D%E4%B8%AA%E4%BA%BA%E5%86%99%E6%B3%95%E9%A3%8E%E6%A0%BC"><span class="toc-text"> 1. 目前个人写法风格</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#10-%E6%A8%A1%E6%9D%BF%E5%87%BD%E6%95%B0"><span class="toc-text"> 1.0 模板函数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#11-%E6%A8%A1%E6%9D%BF%E7%B1%BB"><span class="toc-text"> 1.1 模板类</span></a></li></ol></li></ol>
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#0-FAQ"><span class="toc-text">0. FAQ</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E7%9B%AE%E5%89%8D%E4%B8%AA%E4%BA%BA%E5%86%99%E6%B3%95%E9%A3%8E%E6%A0%BC"><span class="toc-text">1. 目前个人写法风格</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-0-%E6%A8%A1%E6%9D%BF%E5%87%BD%E6%95%B0"><span class="toc-text">1.0 模板函数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1-%E6%A8%A1%E6%9D%BF%E7%B1%BB"><span class="toc-text">1.1 模板类</span></a></li></ol></li></ol>
     </div>
   </article>
   
@@ -375,17 +357,17 @@ T <span class="token function">Max</span><span class="token punctuation">(</span
   <div class="categories-header"><i class="iconfont icon-fenlei" style="padding-right: 2px;"></i>分类</div>
   <div class="categories-list">
     
-      <a href="/categories/语法">
-        <div class="categories-list-item">
-          语法
-          <span class="categories-list-item-badge">2</span>
-        </div>
-      </a>
-    
       <a href="/categories/Unity">
         <div class="categories-list-item">
           Unity
           <span class="categories-list-item-badge">3</span>
+        </div>
+      </a>
+    
+      <a href="/categories/语法">
+        <div class="categories-list-item">
+          语法
+          <span class="categories-list-item-badge">2</span>
         </div>
       </a>
     
@@ -418,7 +400,7 @@ T <span class="token function">Max</span><span class="token punctuation">(</span
   
   <article class="card card-content toc-card">
     <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
-<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#0-faq"><span class="toc-text"> 0. FAQ</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E7%9B%AE%E5%89%8D%E4%B8%AA%E4%BA%BA%E5%86%99%E6%B3%95%E9%A3%8E%E6%A0%BC"><span class="toc-text"> 1. 目前个人写法风格</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#10-%E6%A8%A1%E6%9D%BF%E5%87%BD%E6%95%B0"><span class="toc-text"> 1.0 模板函数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#11-%E6%A8%A1%E6%9D%BF%E7%B1%BB"><span class="toc-text"> 1.1 模板类</span></a></li></ol></li></ol>
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#0-FAQ"><span class="toc-text">0. FAQ</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E7%9B%AE%E5%89%8D%E4%B8%AA%E4%BA%BA%E5%86%99%E6%B3%95%E9%A3%8E%E6%A0%BC"><span class="toc-text">1. 目前个人写法风格</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-0-%E6%A8%A1%E6%9D%BF%E5%87%BD%E6%95%B0"><span class="toc-text">1.0 模板函数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1-%E6%A8%A1%E6%9D%BF%E7%B1%BB"><span class="toc-text">1.1 模板类</span></a></li></ol></li></ol>
   </article>
   
   
@@ -439,12 +421,12 @@ T <span class="token function">Max</span><span class="token punctuation">(</span
     
       <div class="recent-posts-item">
         <div class="recent-posts-item-title">2022-02-22</div>
-        <a href="/2022/02/22/dimensional-cut/"><div class="recent-posts-item-content">URP自定义后处理特效第一篇：次元斩！</div></a>
+        <a href="/2022/02/22/urp-custom-post-effect/"><div class="recent-posts-item-content">URP自定义后处理特效第零篇：前期准备</div></a>
       </div>
     
       <div class="recent-posts-item">
         <div class="recent-posts-item-title">2022-02-22</div>
-        <a href="/2022/02/22/urp-custom-post-effect/"><div class="recent-posts-item-content">URP自定义后处理特效第零篇：前期准备</div></a>
+        <a href="/2022/02/22/dimensional-cut/"><div class="recent-posts-item-content">URP自定义后处理特效第一篇：次元斩！</div></a>
       </div>
     
   </div>

@@ -1,0 +1,770 @@
+<!DOCTYPE html>
+<html>
+<meta  lang="zh-CN" >
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+    content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="theme-color" content="#fff" id="theme-color">
+  <link rel="icon" href="/img/Kaze.png">
+  <title>Numbfish的个人博客</title>
+  <script>
+    // control reverse button
+    var reverseDarkList = {
+      dark: 'light',
+      light: 'dark'
+    };
+    var themeColor = {
+      dark: '#1c1c1e',
+      light: '#fff'
+    }
+    // get the data of css prefers-color-scheme
+    var getCssMediaQuery = function() {
+      return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    };
+    // reverse current darkmode setting function
+    var reverseDarkModeSetting = function() {
+      var setting = localStorage.getItem('user-color-scheme');
+      if(reverseDarkList[setting]) {
+        setting = reverseDarkList[setting];
+      } else if(setting === null) {
+        setting = reverseDarkList[getCssMediaQuery()];
+      } else {
+        return;
+      }
+      localStorage.setItem('user-color-scheme', setting);
+      return setting;
+    };
+    // apply current darkmode setting
+    var setDarkmode = function(mode) {
+      var setting = mode || localStorage.getItem('user-color-scheme');
+      if(setting === getCssMediaQuery()) {
+        document.documentElement.removeAttribute('data-user-color-scheme');
+        localStorage.removeItem('user-color-scheme');
+        document.getElementById('theme-color').content = themeColor[setting];
+      } else if(reverseDarkList[setting]) {
+        document.documentElement.setAttribute('data-user-color-scheme', setting);
+        document.getElementById('theme-color').content = themeColor[setting];
+      } else {
+        document.documentElement.removeAttribute('data-user-color-scheme');
+        localStorage.removeItem('user-color-scheme');
+        document.getElementById('theme-color').content = themeColor[getCssMediaQuery()];
+      }
+    };
+    setDarkmode();
+  </script>
+  <script>
+    function loadScript(url, cb) {
+      var script = document.createElement('script');
+      script.src = url;
+      if (cb) script.onload = cb;
+      script.async = true;
+      document.body.appendChild(script);
+    }
+  </script>
+  
+  <link rel="preload" href="//at.alicdn.com/t/font_1946621_vpj3dq9ceqa.css" as="style" >
+  <link rel="preload" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css" as="style" >
+  
+  <link rel="preload" href="//cdn.jsdelivr.net/npm/fslightbox@3.1.0/index.min.js" as="script">
+  
+  
+  <link rel="preload" href="/js/lib/lozad.min.js" as="script">
+  
+  
+  
+  
+  
+  <link rel="prefetch" href="//cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.css" as="script">
+  
+  
+  
+  
+  
+<link rel="stylesheet" href="/css/main.css">
+
+  
+  
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1946621_vpj3dq9ceqa.css">
+
+  
+  
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css">
+
+  
+  
+  
+  
+  
+  <link href="/js/lib/prism/prism-tomorrow.min.css" rel="stylesheet" data-prism="prism-tomorrow">
+  
+  
+  
+<link rel="stylesheet" href="/js/lib/prism/prism-line-numbers.min.css">
+
+  
+  
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+<body>
+  <div class="wrapper">
+    
+    <nav class="navbar">
+  <div class="navbar-logo">
+    <span class="navbar-logo-main">
+      
+      <img class="navbar-logo-img" src="/img/Kaze.png">
+      
+      <span class="navbar-logo-dsc">Numbfish的个人博客</span>
+    </span>
+  </div>
+  <div class="navbar-menu">
+    
+    <a href="/" class="navbar-menu-item">首页 </a>
+    
+    <a href="/archives" class="navbar-menu-item">归档 </a>
+    
+    <a href="/tags" class="navbar-menu-item">标签 </a>
+    
+    <a href="/categories" class="navbar-menu-item">分类 </a>
+    
+    <a href="/about" class="navbar-menu-item">关于 </a>
+    
+    <a href="/links" class="navbar-menu-item">友链 </a>
+    
+    <a class="navbar-menu-item darknavbar" id="dark"><i class="iconfont icon-weather"></i></a>
+  </div>
+</nav>
+    
+    <div class="section-wrap">
+      <div class="container">
+        <div class="columns">
+          <main class="main-column">
+<div class="image-wrapper">
+  <img src="/img/urp-custom-post-effect-000.jpg" data-src="/img/urp-custom-post-effect-000.jpg"
+    srcset="/img/urp-custom-post-effect-000.jpg"
+    class="image lozad">
+</div>
+
+<article class="card card-content">
+  <header>
+    <h1 class="post-title">
+      URP自定义后处理特效第零篇：前期准备
+    </h1>
+  </header>
+  <div class="post-meta post-show-meta">
+    <time datetime="2022-02-22T13:50:00.000Z" style="display: flex; align-items: center;">
+      <i class="iconfont icon-calendar" style="margin-right: 2px;"></i>
+      <span>2022-02-22</span>
+    </time>
+    
+    <span class="dot"></span>
+    
+    <a href="/categories/Unity/" class="post-meta-link">Unity</a>
+    
+    
+    
+    <span class="dot"></span>
+    <span>2.4k 字</span>
+    
+  </div>
+  
+  <div class="post-meta post-show-meta" style="margin-top: -10px;">
+    <div style="display: flex; align-items: center;">
+      <i class="iconfont icon-biaoqian" style="margin-right: 2px; font-size: 1.15rem;"></i>
+      
+      
+        <a href="/tags/Unity/" class="post-meta-link">Unity</a>
+      
+      
+      <span class="dot"></span>
+      
+        <a href="/tags/URP/" class="post-meta-link">URP</a>
+      
+      
+      <span class="dot"></span>
+      
+        <a href="/tags/后处理/" class="post-meta-link">后处理</a>
+      
+    </div>
+  </div>
+  
+  </header>
+  <div id="section" class="post-content">
+    <h1 id="一-关于urpuniversal-render-pipeline"><a class="markdownIt-Anchor" href="#一-关于urpuniversal-render-pipeline"></a> 一、关于URP（Universal Render Pipeline）</h1>
+<h2 id="11-什么是urp"><a class="markdownIt-Anchor" href="#11-什么是urp"></a> 1.1 什么是URP</h2>
+<p>关于URP，在Package Mananger中，官方是这样描述的：</p>
+<blockquote>
+<p><strong>The Universal Render Pipeline (URP)</strong> is a prebuilt <strong>Scriptable Render Pipeline</strong>, made by Unity. URP provides artist-friendly workflows that let you quickly and easily create optimized graphics across a range of platforms, from mobile to high-end consoles and PCs.</p>
+<p><strong>通用渲染管线（Universal Render Pipeline，URP）<strong>是一个由Unity官方开发的预构建的</strong>可编程渲染管线（Scriptable Render Pipeline，SRP）</strong>。URP提供了能让你快速轻松地在一系列平台，从手机到高端游戏机和电脑上创建优化图像的艺术家友好型的工作流。</p>
+</blockquote>
+<p>关于URP，SRP，渲染管线之类的概念，可以看：<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/103457229">https://zhuanlan.zhihu.com/p/103457229</a></p>
+<h2 id="12-我为什么用urp"><a class="markdownIt-Anchor" href="#12-我为什么用urp"></a> 1.2 我为什么用URP</h2>
+<p>主要原因是因为URP提供了<strong>2D光照系统</strong>，可以很方便快速地布置光照</p>
+<h2 id="13-怎么切换成urp"><a class="markdownIt-Anchor" href="#13-怎么切换成urp"></a> 1.3 怎么切换成URP</h2>
+<h3 id="131-安装urp"><a class="markdownIt-Anchor" href="#131-安装urp"></a> 1.3.1 安装URP</h3>
+<p>本文使用的Unity版本为在2020.3.27f1c1，我们打开Unity的Window/Package Manager，Packages选择Unity Registry，可以找到Universal RP的包，点击Install进行安装</p>
+<h3 id="132-新建urpasset"><a class="markdownIt-Anchor" href="#132-新建urpasset"></a> 1.3.2 新建URPAsset</h3>
+<p>在Project窗口中，选一个位置右键，点Create/Rendering/Universal Render Pipeline/Pipeline Asset(Forward Renderer)新建一个URPAsset，默认名称是UniversalRenderPipelineAsset，我们可以改名为URPAsset。新建之后还会跟着多出一个叫UniversalRenderPipelineAsset_Renderder的文件，点击URPAsset，可以看到Inspector窗口中的General/RendererList已经自动放好了这个默认的文件。它是一个称之为Forward Renderer的文件，可以在Create/Rendering/中找到。由于我们的后处理特效是通过这个文件来设置的，因此我们可以将这个文件改名为CustomForwardRendererData</p>
+<h3 id="133-切换为默认是支持2d光照的2drenderer且保留customforwardrendererdata"><a class="markdownIt-Anchor" href="#133-切换为默认是支持2d光照的2drenderer且保留customforwardrendererdata"></a> 1.3.3 切换为默认是支持2D光照的2DRenderer，且保留CustomForwardRendererData</h3>
+<p>在Project窗口中，选一个位置右键，点Create/Rendering/Universal Render Pipeline/2D Renderer(Experimental)新建一个2D Renderer，默认名称是New 2D Renderer，我们可以改名为2DRenderer。将该2DRenderer放入上面第2步创建的URPAsset文件的Inspector窗口中的General/RendererList的0号位置中，替换掉原来默认的CustomForwardRendererData。这个CustomForwardRendererData还应该加回去来做2DRenderer无法实现的功能，因此我们点击Inspector窗口中的General/Renderer List中的+，新增一行然后将CustomForwardRendererData拖进去</p>
+<h3 id="134-切换为urp渲染管线"><a class="markdownIt-Anchor" href="#134-切换为urp渲染管线"></a> 1.3.4 切换为URP渲染管线</h3>
+<p>打开Unity的Edit/Project Settings/Graphics，将URPAsset拖入Scriptable Render Pipeline Settings一栏中，到此即可切换为URP渲染管线了</p>
+<h1 id="二-兼容2d光照的urp自定义后处理特效"><a class="markdownIt-Anchor" href="#二-兼容2d光照的urp自定义后处理特效"></a> 二、兼容2D光照的URP自定义后处理特效</h1>
+<p>此部分内容主要参考自B站一位大佬的架构设计，非常感谢分享了这样一个方便的架构！<a target="_blank" rel="noopener" href="https://www.bilibili.com/video/av588100663/">https://www.bilibili.com/video/av588100663/</a></p>
+<h2 id="21-架构设计"><a class="markdownIt-Anchor" href="#21-架构设计"></a> 2.1 架构设计</h2>
+<p><img src="/img/urp-custom-post-effect-001.png" alt="" / srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/img/urp-custom-post-effect-001.png" class="lozad post-image"></p>
+<p>架构图如上，其具体代码为：</p>
+<pre class="line-numbers language-csharp" data-language="csharp"><code class="language-csharp"><span class="token keyword">using</span> <span class="token namespace">System<span class="token punctuation">.</span>Collections</span><span class="token punctuation">;</span>
+<span class="token keyword">using</span> <span class="token namespace">System<span class="token punctuation">.</span>Collections<span class="token punctuation">.</span>Generic</span><span class="token punctuation">;</span>
+<span class="token keyword">using</span> <span class="token namespace">System<span class="token punctuation">.</span>Linq</span><span class="token punctuation">;</span>
+<span class="token keyword">using</span> <span class="token namespace">UnityEngine</span><span class="token punctuation">;</span>
+<span class="token keyword">using</span> <span class="token namespace">UnityEngine<span class="token punctuation">.</span>Rendering</span><span class="token punctuation">;</span>
+<span class="token keyword">using</span> <span class="token namespace">UnityEngine<span class="token punctuation">.</span>Rendering<span class="token punctuation">.</span>Universal</span><span class="token punctuation">;</span>
+
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">CustomPostProcessRendererFeature</span> <span class="token punctuation">:</span> <span class="token type-list"><span class="token class-name">ScriptableRendererFeature</span></span> <span class="token punctuation">&#123;</span>
+    <span class="token comment">// 不同插入点的render pass</span>
+    <span class="token class-name">CustomPostProcessRenderPass</span> afterOpaqueAndSky<span class="token punctuation">;</span>
+    <span class="token class-name">CustomPostProcessRenderPass</span> beforePostProcess<span class="token punctuation">;</span>
+    <span class="token class-name">CustomPostProcessRenderPass</span> afterPostProcess<span class="token punctuation">;</span>
+
+    <span class="token comment">// 所有自定义的VolumeComponent</span>
+    <span class="token class-name">List<span class="token punctuation">&lt;</span>CustomVolumeComponent<span class="token punctuation">></span></span> components<span class="token punctuation">;</span>
+
+    <span class="token comment">// 用于after PostProcess的render target</span>
+    <span class="token class-name">RenderTargetHandle</span> afterPostProcessTexture<span class="token punctuation">;</span>
+
+    <span class="token keyword">public</span> <span class="token keyword">override</span> <span class="token return-type class-name"><span class="token keyword">void</span></span> <span class="token function">AddRenderPasses</span><span class="token punctuation">(</span><span class="token class-name">ScriptableRenderer</span> renderer<span class="token punctuation">,</span> <span class="token keyword">ref</span> <span class="token class-name">RenderingData</span> renderingData<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token comment">// CustomPostProcessRenderPass中定义了一个变量activeComponents来存储当前可用的的后处理组件，</span>
+        <span class="token comment">// 在Render Feature的AddRenderPasses中，需要先判断Render Pass中是否有组件处于激活状态，</span>
+        <span class="token comment">// 如果没有一个组件激活，那么就没必要添加这个Render Pass，</span>
+        <span class="token comment">// 这里调用先前在组件中定义好的Setup方法初始化，随后调用IsActive判断其是否处于激活状态</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>renderingData<span class="token punctuation">.</span>cameraData<span class="token punctuation">.</span>postProcessEnabled<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+            <span class="token comment">// 为每个render pass设置render target</span>
+            <span class="token class-name"><span class="token keyword">var</span></span> source <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token constructor-invocation class-name">RenderTargetHandle</span><span class="token punctuation">(</span>renderer<span class="token punctuation">.</span>cameraColorTarget<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token keyword">if</span> <span class="token punctuation">(</span>afterOpaqueAndSky<span class="token punctuation">.</span><span class="token function">SetupComponents</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+                afterOpaqueAndSky<span class="token punctuation">.</span><span class="token function">Setup</span><span class="token punctuation">(</span>source<span class="token punctuation">,</span> source<span class="token punctuation">)</span><span class="token punctuation">;</span>
+                renderer<span class="token punctuation">.</span><span class="token function">EnqueuePass</span><span class="token punctuation">(</span>afterOpaqueAndSky<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token punctuation">&#125;</span>
+            <span class="token keyword">if</span> <span class="token punctuation">(</span>beforePostProcess<span class="token punctuation">.</span><span class="token function">SetupComponents</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+                beforePostProcess<span class="token punctuation">.</span><span class="token function">Setup</span><span class="token punctuation">(</span>source<span class="token punctuation">,</span> source<span class="token punctuation">)</span><span class="token punctuation">;</span>
+                renderer<span class="token punctuation">.</span><span class="token function">EnqueuePass</span><span class="token punctuation">(</span>beforePostProcess<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token punctuation">&#125;</span>
+            <span class="token keyword">if</span> <span class="token punctuation">(</span>afterPostProcess<span class="token punctuation">.</span><span class="token function">SetupComponents</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+                <span class="token comment">// 如果下一个Pass是FinalBlit，则输入与输出均为_AfterPostProcessTexture</span>
+                source <span class="token operator">=</span> <span class="token class-name">renderingData<span class="token punctuation">.</span>cameraData<span class="token punctuation">.</span>resolveFinalTarget <span class="token punctuation">?</span></span> afterPostProcessTexture <span class="token punctuation">:</span> source<span class="token punctuation">;</span>
+                afterPostProcess<span class="token punctuation">.</span><span class="token function">Setup</span><span class="token punctuation">(</span>source<span class="token punctuation">,</span> source<span class="token punctuation">)</span><span class="token punctuation">;</span>
+                renderer<span class="token punctuation">.</span><span class="token function">EnqueuePass</span><span class="token punctuation">(</span>afterPostProcess<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token punctuation">&#125;</span>
+        <span class="token punctuation">&#125;</span>
+    <span class="token punctuation">&#125;</span>
+
+    <span class="token comment">// 初始化Feature资源，每当序列化发生时都会调用</span>
+    <span class="token keyword">public</span> <span class="token keyword">override</span> <span class="token return-type class-name"><span class="token keyword">void</span></span> <span class="token function">Create</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token comment">// 从VolumeManager获取所有自定义的VolumeComponent</span>
+        <span class="token class-name"><span class="token keyword">var</span></span> stack <span class="token operator">=</span> VolumeManager<span class="token punctuation">.</span>instance<span class="token punctuation">.</span>stack<span class="token punctuation">;</span>
+        components <span class="token operator">=</span> VolumeManager<span class="token punctuation">.</span>instance<span class="token punctuation">.</span>baseComponentTypeArray
+            <span class="token punctuation">.</span><span class="token function">Where</span><span class="token punctuation">(</span>t <span class="token operator">=></span> t<span class="token punctuation">.</span><span class="token function">IsSubclassOf</span><span class="token punctuation">(</span><span class="token keyword">typeof</span><span class="token punctuation">(</span><span class="token type-expression class-name">CustomVolumeComponent</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token operator">&amp;&amp;</span> stack<span class="token punctuation">.</span><span class="token function">GetComponent</span><span class="token punctuation">(</span>t<span class="token punctuation">)</span> <span class="token operator">!=</span> <span class="token keyword">null</span><span class="token punctuation">)</span>
+            <span class="token punctuation">.</span><span class="token function">Select</span><span class="token punctuation">(</span>t <span class="token operator">=></span> stack<span class="token punctuation">.</span><span class="token function">GetComponent</span><span class="token punctuation">(</span>t<span class="token punctuation">)</span> <span class="token keyword">as</span> <span class="token class-name">CustomVolumeComponent</span><span class="token punctuation">)</span>
+            <span class="token punctuation">.</span><span class="token function">ToList</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+        <span class="token comment">// 初始化不同插入点的render pass</span>
+        <span class="token class-name"><span class="token keyword">var</span></span> afterOpaqueAndSkyComponents <span class="token operator">=</span> components
+            <span class="token punctuation">.</span><span class="token function">Where</span><span class="token punctuation">(</span>c <span class="token operator">=></span> c<span class="token punctuation">.</span>InjectionPoint <span class="token operator">==</span> CustomPostProcessInjectionPoint<span class="token punctuation">.</span>AfterOpaqueAndSky<span class="token punctuation">)</span>
+            <span class="token punctuation">.</span><span class="token function">OrderBy</span><span class="token punctuation">(</span>c <span class="token operator">=></span> c<span class="token punctuation">.</span>OrderInPass<span class="token punctuation">)</span>
+            <span class="token punctuation">.</span><span class="token function">ToList</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        afterOpaqueAndSky <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token constructor-invocation class-name">CustomPostProcessRenderPass</span><span class="token punctuation">(</span><span class="token string">"Custom PostProcess after Opaque and Sky"</span><span class="token punctuation">,</span> afterOpaqueAndSkyComponents<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        afterOpaqueAndSky<span class="token punctuation">.</span>renderPassEvent <span class="token operator">=</span> RenderPassEvent<span class="token punctuation">.</span>AfterRenderingOpaques<span class="token punctuation">;</span>
+
+        <span class="token class-name"><span class="token keyword">var</span></span> beforePostProcessComponents <span class="token operator">=</span> components
+            <span class="token punctuation">.</span><span class="token function">Where</span><span class="token punctuation">(</span>c <span class="token operator">=></span> c<span class="token punctuation">.</span>InjectionPoint <span class="token operator">==</span> CustomPostProcessInjectionPoint<span class="token punctuation">.</span>BeforePostProcess<span class="token punctuation">)</span>
+            <span class="token punctuation">.</span><span class="token function">OrderBy</span><span class="token punctuation">(</span>c <span class="token operator">=></span> c<span class="token punctuation">.</span>OrderInPass<span class="token punctuation">)</span>
+            <span class="token punctuation">.</span><span class="token function">ToList</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        beforePostProcess <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token constructor-invocation class-name">CustomPostProcessRenderPass</span><span class="token punctuation">(</span><span class="token string">"Custom PostProcess before PostProcess"</span><span class="token punctuation">,</span> beforePostProcessComponents<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        beforePostProcess<span class="token punctuation">.</span>renderPassEvent <span class="token operator">=</span> RenderPassEvent<span class="token punctuation">.</span>BeforeRenderingPostProcessing<span class="token punctuation">;</span>
+
+        <span class="token class-name"><span class="token keyword">var</span></span> afterPostProcessComponents <span class="token operator">=</span> components
+            <span class="token punctuation">.</span><span class="token function">Where</span><span class="token punctuation">(</span>c <span class="token operator">=></span> c<span class="token punctuation">.</span>InjectionPoint <span class="token operator">==</span> CustomPostProcessInjectionPoint<span class="token punctuation">.</span>AfterPostProcess<span class="token punctuation">)</span>
+            <span class="token punctuation">.</span><span class="token function">OrderBy</span><span class="token punctuation">(</span>c <span class="token operator">=></span> c<span class="token punctuation">.</span>OrderInPass<span class="token punctuation">)</span>
+            <span class="token punctuation">.</span><span class="token function">ToList</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        afterPostProcess <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token constructor-invocation class-name">CustomPostProcessRenderPass</span><span class="token punctuation">(</span><span class="token string">"Custom PostProcess after PostProcess"</span><span class="token punctuation">,</span> afterPostProcessComponents<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token comment">// 为了确保输入为_AfterPostProcessTexture，这里插入到AfterRendering而不是AfterRenderingPostProcessing</span>
+        afterPostProcess<span class="token punctuation">.</span>renderPassEvent <span class="token operator">=</span> RenderPassEvent<span class="token punctuation">.</span>AfterRendering<span class="token punctuation">;</span>
+
+        <span class="token comment">// 初始化用于after PostProcess的render target</span>
+        afterPostProcessTexture<span class="token punctuation">.</span><span class="token function">Init</span><span class="token punctuation">(</span><span class="token string">"_AfterPostProcessTexture"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+
+    <span class="token comment">// 资源释放</span>
+    <span class="token keyword">protected</span> <span class="token keyword">override</span> <span class="token return-type class-name"><span class="token keyword">void</span></span> <span class="token function">Dispose</span><span class="token punctuation">(</span><span class="token class-name"><span class="token keyword">bool</span></span> disposing<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">base</span><span class="token punctuation">.</span><span class="token function">Dispose</span><span class="token punctuation">(</span>disposing<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>disposing <span class="token operator">&amp;&amp;</span> components <span class="token operator">!=</span> <span class="token keyword">null</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+            <span class="token keyword">foreach</span> <span class="token punctuation">(</span><span class="token class-name"><span class="token keyword">var</span></span> item <span class="token keyword">in</span> components<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+                item<span class="token punctuation">.</span><span class="token function">Dispose</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token punctuation">&#125;</span>
+        <span class="token punctuation">&#125;</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-csharp" data-language="csharp"><code class="language-csharp"><span class="token keyword">using</span> <span class="token namespace">System<span class="token punctuation">.</span>Collections</span><span class="token punctuation">;</span>
+<span class="token keyword">using</span> <span class="token namespace">System<span class="token punctuation">.</span>Collections<span class="token punctuation">.</span>Generic</span><span class="token punctuation">;</span>
+<span class="token keyword">using</span> <span class="token namespace">System<span class="token punctuation">.</span>Linq</span><span class="token punctuation">;</span>
+<span class="token keyword">using</span> <span class="token namespace">UnityEngine</span><span class="token punctuation">;</span>
+<span class="token keyword">using</span> <span class="token namespace">UnityEngine<span class="token punctuation">.</span>Rendering</span><span class="token punctuation">;</span>
+<span class="token keyword">using</span> <span class="token namespace">UnityEngine<span class="token punctuation">.</span>Rendering<span class="token punctuation">.</span>Universal</span><span class="token punctuation">;</span>
+
+<span class="token comment">// 官方示例中，一个Renderer Feature对应一个自定义后处理效果，各个后处理相互独立，好处是灵活自由易调整；</span>
+<span class="token comment">// 坏处也在此，相互独立意味着每个效果都可能要开临时RT，耗费资源比双缓冲互换要多，</span>
+<span class="token comment">// 并且Renderer Feature在Renderer Data下，相对于场景中的Volume来说在代码中调用起来反而没那么方便。</span>
+<span class="token comment">// 那么这里的思路便是将所有相同插入点的后处理组件放到同一个Render Pass下渲染，这样就可以做到双缓冲交换，又保持了Volume的优势。</span>
+
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">CustomPostProcessRenderPass</span> <span class="token punctuation">:</span> <span class="token type-list"><span class="token class-name">ScriptableRenderPass</span></span> <span class="token punctuation">&#123;</span>
+    <span class="token class-name">List<span class="token punctuation">&lt;</span>CustomVolumeComponent<span class="token punctuation">></span></span> volumeComponents<span class="token punctuation">;</span> <span class="token comment">// 所有自定义后处理组件</span>
+    <span class="token class-name">List<span class="token punctuation">&lt;</span><span class="token keyword">int</span><span class="token punctuation">></span></span> activeComponents<span class="token punctuation">;</span> <span class="token comment">// 当前可用的组件下标</span>
+
+    <span class="token class-name"><span class="token keyword">string</span></span> profilerTag<span class="token punctuation">;</span>
+    <span class="token class-name">List<span class="token punctuation">&lt;</span>ProfilingSampler<span class="token punctuation">></span></span> profilingSamplers<span class="token punctuation">;</span> <span class="token comment">// 每个组件对应的ProfilingSampler</span>
+
+    <span class="token class-name">RenderTargetHandle</span> source<span class="token punctuation">;</span> <span class="token comment">// 当前源与目标</span>
+    <span class="token class-name">RenderTargetHandle</span> destination<span class="token punctuation">;</span>
+    <span class="token class-name">RenderTargetHandle</span> tempRT0<span class="token punctuation">;</span> <span class="token comment">// 临时RT</span>
+    <span class="token class-name">RenderTargetHandle</span> tempRT1<span class="token punctuation">;</span>
+
+    <span class="token comment">/// &lt;param name="profilerTag">Profiler标识&lt;/param></span>
+    <span class="token comment">/// &lt;param name="volumeComponents">属于该RendererPass的后处理组件&lt;/param></span>
+    <span class="token keyword">public</span> <span class="token function">CustomPostProcessRenderPass</span><span class="token punctuation">(</span><span class="token class-name"><span class="token keyword">string</span></span> profilerTag<span class="token punctuation">,</span> <span class="token class-name">List<span class="token punctuation">&lt;</span>CustomVolumeComponent<span class="token punctuation">></span></span> volumeComponents<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>profilerTag <span class="token operator">=</span> profilerTag<span class="token punctuation">;</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>volumeComponents <span class="token operator">=</span> volumeComponents<span class="token punctuation">;</span>
+        activeComponents <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token constructor-invocation class-name">List<span class="token punctuation">&lt;</span><span class="token keyword">int</span><span class="token punctuation">></span></span><span class="token punctuation">(</span>volumeComponents<span class="token punctuation">.</span>Count<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        profilingSamplers <span class="token operator">=</span> volumeComponents<span class="token punctuation">.</span><span class="token function">Select</span><span class="token punctuation">(</span>c <span class="token operator">=></span> <span class="token keyword">new</span> <span class="token constructor-invocation class-name">ProfilingSampler</span><span class="token punctuation">(</span>c<span class="token punctuation">.</span><span class="token function">ToString</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">ToList</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+        tempRT0<span class="token punctuation">.</span><span class="token function">Init</span><span class="token punctuation">(</span><span class="token string">"_TemporaryRenderTexture0"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        tempRT1<span class="token punctuation">.</span><span class="token function">Init</span><span class="token punctuation">(</span><span class="token string">"_TemporaryRenderTexture1"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+
+    <span class="token comment">// 你可以在这里实现渲染逻辑。</span>
+    <span class="token comment">// 使用&lt;c>ScriptableRenderContext&lt;/c>来执行绘图命令或Command Buffer</span>
+    <span class="token comment">// https://docs.unity3d.com/ScriptReference/Rendering.ScriptableRenderContext.html</span>
+    <span class="token comment">// 你不需要手动调用ScriptableRenderContext.submit，渲染管线会在特定位置调用它。</span>
+    <span class="token keyword">public</span> <span class="token keyword">override</span> <span class="token return-type class-name"><span class="token keyword">void</span></span> <span class="token function">Execute</span><span class="token punctuation">(</span><span class="token class-name">ScriptableRenderContext</span> context<span class="token punctuation">,</span> <span class="token keyword">ref</span> <span class="token class-name">RenderingData</span> renderingData<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token class-name"><span class="token keyword">var</span></span> cmd <span class="token operator">=</span> CommandBufferPool<span class="token punctuation">.</span><span class="token function">Get</span><span class="token punctuation">(</span>profilerTag<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        context<span class="token punctuation">.</span><span class="token function">ExecuteCommandBuffer</span><span class="token punctuation">(</span>cmd<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        cmd<span class="token punctuation">.</span><span class="token function">Clear</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+        <span class="token comment">// 获取Descriptor</span>
+        <span class="token class-name"><span class="token keyword">var</span></span> descriptor <span class="token operator">=</span> renderingData<span class="token punctuation">.</span>cameraData<span class="token punctuation">.</span>cameraTargetDescriptor<span class="token punctuation">;</span>
+        descriptor<span class="token punctuation">.</span>msaaSamples <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>
+        descriptor<span class="token punctuation">.</span>depthBufferBits <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+
+        <span class="token comment">// 初始化临时RT</span>
+        <span class="token class-name">RenderTargetIdentifier</span> buff0<span class="token punctuation">,</span> buff1<span class="token punctuation">;</span>
+        <span class="token class-name"><span class="token keyword">bool</span></span> rt1Used <span class="token operator">=</span> <span class="token boolean">false</span><span class="token punctuation">;</span>
+        cmd<span class="token punctuation">.</span><span class="token function">GetTemporaryRT</span><span class="token punctuation">(</span>tempRT0<span class="token punctuation">.</span>id<span class="token punctuation">,</span> descriptor<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        buff0 <span class="token operator">=</span> tempRT0<span class="token punctuation">.</span>id<span class="token punctuation">;</span>
+        <span class="token comment">// 如果destination没有初始化，则需要获取RT，主要是destinaton为_AfterPostProcessTexture的情况</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>destination <span class="token operator">!=</span> RenderTargetHandle<span class="token punctuation">.</span>CameraTarget <span class="token operator">&amp;&amp;</span> <span class="token operator">!</span>destination<span class="token punctuation">.</span><span class="token function">HasInternalRenderTargetId</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+            cmd<span class="token punctuation">.</span><span class="token function">GetTemporaryRT</span><span class="token punctuation">(</span>destination<span class="token punctuation">.</span>id<span class="token punctuation">,</span> descriptor<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span>
+
+        <span class="token comment">// 执行每个组件的Render方法</span>
+        <span class="token comment">// 如果只有一个组件，则直接source -> buff0</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>activeComponents<span class="token punctuation">.</span>Count <span class="token operator">==</span> <span class="token number">1</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+            <span class="token class-name"><span class="token keyword">int</span></span> index <span class="token operator">=</span> activeComponents<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+            <span class="token keyword">using</span> <span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token constructor-invocation class-name">ProfilingScope</span><span class="token punctuation">(</span>cmd<span class="token punctuation">,</span> profilingSamplers<span class="token punctuation">[</span>index<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+                volumeComponents<span class="token punctuation">[</span>index<span class="token punctuation">]</span><span class="token punctuation">.</span><span class="token function">Render</span><span class="token punctuation">(</span>cmd<span class="token punctuation">,</span> <span class="token keyword">ref</span> renderingData<span class="token punctuation">,</span> source<span class="token punctuation">.</span><span class="token function">Identifier</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> buff0<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token punctuation">&#125;</span>
+        <span class="token punctuation">&#125;</span> <span class="token keyword">else</span> <span class="token punctuation">&#123;</span>
+            <span class="token comment">// 如果有多个组件，则在两个RT上左右横跳</span>
+            cmd<span class="token punctuation">.</span><span class="token function">GetTemporaryRT</span><span class="token punctuation">(</span>tempRT1<span class="token punctuation">.</span>id<span class="token punctuation">,</span> descriptor<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            buff1 <span class="token operator">=</span> tempRT1<span class="token punctuation">.</span>id<span class="token punctuation">;</span>
+            rt1Used <span class="token operator">=</span> <span class="token boolean">true</span><span class="token punctuation">;</span>
+            <span class="token function">Blit</span><span class="token punctuation">(</span>cmd<span class="token punctuation">,</span> source<span class="token punctuation">.</span><span class="token function">Identifier</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> buff0<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token class-name"><span class="token keyword">int</span></span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> activeComponents<span class="token punctuation">.</span>Count<span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+                <span class="token class-name"><span class="token keyword">int</span></span> index <span class="token operator">=</span> activeComponents<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">;</span>
+                <span class="token class-name"><span class="token keyword">var</span></span> component <span class="token operator">=</span> volumeComponents<span class="token punctuation">[</span>index<span class="token punctuation">]</span><span class="token punctuation">;</span>
+                <span class="token keyword">using</span> <span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token constructor-invocation class-name">ProfilingScope</span><span class="token punctuation">(</span>cmd<span class="token punctuation">,</span> profilingSamplers<span class="token punctuation">[</span>index<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+                    component<span class="token punctuation">.</span><span class="token function">Render</span><span class="token punctuation">(</span>cmd<span class="token punctuation">,</span> <span class="token keyword">ref</span> renderingData<span class="token punctuation">,</span> buff0<span class="token punctuation">,</span> buff1<span class="token punctuation">)</span><span class="token punctuation">;</span>
+                <span class="token punctuation">&#125;</span>
+                CoreUtils<span class="token punctuation">.</span><span class="token function">Swap</span><span class="token punctuation">(</span><span class="token keyword">ref</span> buff0<span class="token punctuation">,</span> <span class="token keyword">ref</span> buff1<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token punctuation">&#125;</span>
+        <span class="token punctuation">&#125;</span>
+
+        <span class="token comment">// 最后blit到destination</span>
+        <span class="token function">Blit</span><span class="token punctuation">(</span>cmd<span class="token punctuation">,</span> buff0<span class="token punctuation">,</span> destination<span class="token punctuation">.</span><span class="token function">Identifier</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+        <span class="token comment">// 释放</span>
+        cmd<span class="token punctuation">.</span><span class="token function">ReleaseTemporaryRT</span><span class="token punctuation">(</span>tempRT0<span class="token punctuation">.</span>id<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>rt1Used<span class="token punctuation">)</span>
+            cmd<span class="token punctuation">.</span><span class="token function">ReleaseTemporaryRT</span><span class="token punctuation">(</span>tempRT1<span class="token punctuation">.</span>id<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+        context<span class="token punctuation">.</span><span class="token function">ExecuteCommandBuffer</span><span class="token punctuation">(</span>cmd<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        CommandBufferPool<span class="token punctuation">.</span><span class="token function">Release</span><span class="token punctuation">(</span>cmd<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+
+    <span class="token comment">/// &lt;summary></span>
+    <span class="token comment">/// 设置后处理组件</span>
+    <span class="token comment">/// &lt;/summary></span>
+    <span class="token comment">/// &lt;returns>是否存在有效组件&lt;/returns></span>
+    <span class="token keyword">public</span> <span class="token return-type class-name"><span class="token keyword">bool</span></span> <span class="token function">SetupComponents</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        activeComponents<span class="token punctuation">.</span><span class="token function">Clear</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token class-name"><span class="token keyword">int</span></span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> volumeComponents<span class="token punctuation">.</span>Count<span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+            volumeComponents<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">.</span><span class="token function">Setup</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token keyword">if</span> <span class="token punctuation">(</span>volumeComponents<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">.</span><span class="token function">IsActive</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+                activeComponents<span class="token punctuation">.</span><span class="token function">Add</span><span class="token punctuation">(</span>i<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token punctuation">&#125;</span>
+        <span class="token punctuation">&#125;</span>
+        <span class="token keyword">return</span> activeComponents<span class="token punctuation">.</span>Count <span class="token operator">!=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+
+    <span class="token comment">/// &lt;summary></span>
+    <span class="token comment">/// 设置渲染源和渲染目标</span>
+    <span class="token comment">/// &lt;/summary></span>
+    <span class="token keyword">public</span> <span class="token return-type class-name"><span class="token keyword">void</span></span> <span class="token function">Setup</span><span class="token punctuation">(</span><span class="token class-name">RenderTargetHandle</span> source<span class="token punctuation">,</span> <span class="token class-name">RenderTargetHandle</span> destination<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>source <span class="token operator">=</span> source<span class="token punctuation">;</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>destination <span class="token operator">=</span> destination<span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-csharp" data-language="csharp"><code class="language-csharp"><span class="token keyword">using</span> <span class="token namespace">System</span><span class="token punctuation">;</span>
+<span class="token keyword">using</span> <span class="token namespace">System<span class="token punctuation">.</span>Collections</span><span class="token punctuation">;</span>
+<span class="token keyword">using</span> <span class="token namespace">System<span class="token punctuation">.</span>Collections<span class="token punctuation">.</span>Generic</span><span class="token punctuation">;</span>
+<span class="token keyword">using</span> <span class="token namespace">UnityEngine</span><span class="token punctuation">;</span>
+<span class="token keyword">using</span> <span class="token namespace">UnityEngine<span class="token punctuation">.</span>Rendering</span><span class="token punctuation">;</span>
+<span class="token keyword">using</span> <span class="token namespace">UnityEngine<span class="token punctuation">.</span>Rendering<span class="token punctuation">.</span>Universal</span><span class="token punctuation">;</span>
+
+<span class="token comment">/// 后处理插入位置</span>
+<span class="token keyword">public</span> <span class="token keyword">enum</span> <span class="token class-name">CustomPostProcessInjectionPoint</span> <span class="token punctuation">&#123;</span>
+    AfterOpaqueAndSky<span class="token punctuation">,</span> <span class="token comment">// 天空渲染之后</span>
+    BeforePostProcess<span class="token punctuation">,</span> <span class="token comment">// 内置后处理之前</span>
+    AfterPostProcess <span class="token comment">// 内置后处理之后</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token keyword">public</span> <span class="token keyword">abstract</span> <span class="token keyword">class</span> <span class="token class-name">CustomVolumeComponent</span> <span class="token punctuation">:</span> <span class="token type-list"><span class="token class-name">VolumeComponent</span><span class="token punctuation">,</span> <span class="token class-name">IPostProcessComponent</span><span class="token punctuation">,</span> <span class="token class-name">IDisposable</span></span> <span class="token punctuation">&#123;</span>
+    <span class="token comment">// 插入位置</span>
+    <span class="token keyword">public</span> <span class="token keyword">virtual</span> <span class="token return-type class-name">CustomPostProcessInjectionPoint</span> InjectionPoint <span class="token operator">=></span> CustomPostProcessInjectionPoint<span class="token punctuation">.</span>AfterPostProcess<span class="token punctuation">;</span>
+
+    <span class="token comment">// 在同一个插入点可能会存在多个后处理组件，所以还需要一个排序编号来确定谁先谁后：</span>
+    <span class="token comment">// 在InjectionPoint中的渲染顺序</span>
+    <span class="token keyword">public</span> <span class="token keyword">virtual</span> <span class="token return-type class-name"><span class="token keyword">int</span></span> OrderInPass <span class="token operator">=></span> <span class="token number">0</span><span class="token punctuation">;</span>
+
+    <span class="token comment">// 初始化，将在RenderPass加入队列时调用</span>
+    <span class="token keyword">public</span> <span class="token keyword">abstract</span> <span class="token return-type class-name"><span class="token keyword">void</span></span> <span class="token function">Setup</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token comment">// 执行渲染</span>
+    <span class="token keyword">public</span> <span class="token keyword">abstract</span> <span class="token return-type class-name"><span class="token keyword">void</span></span> <span class="token function">Render</span><span class="token punctuation">(</span><span class="token class-name">CommandBuffer</span> cmd<span class="token punctuation">,</span> <span class="token keyword">ref</span> <span class="token class-name">RenderingData</span> renderingData<span class="token punctuation">,</span> <span class="token class-name">RenderTargetIdentifier</span> source<span class="token punctuation">,</span> <span class="token class-name">RenderTargetIdentifier</span> destination<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token preprocessor property">#<span class="token directive keyword">region</span> IPostProcessComponent</span>
+    <span class="token keyword">public</span> <span class="token keyword">abstract</span> <span class="token return-type class-name"><span class="token keyword">bool</span></span> <span class="token function">IsActive</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 返回当前组件是否处于激活状态</span>
+
+    <span class="token keyword">public</span> <span class="token keyword">virtual</span> <span class="token return-type class-name"><span class="token keyword">bool</span></span> <span class="token function">IsTileCompatible</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token boolean">false</span><span class="token punctuation">;</span>
+    <span class="token preprocessor property">#<span class="token directive keyword">endregion</span></span>
+
+    <span class="token preprocessor property">#<span class="token directive keyword">region</span> IDisposable 由于渲染可能需要临时生成材质，在这里将它们释放</span>
+    <span class="token keyword">public</span> <span class="token return-type class-name"><span class="token keyword">void</span></span> <span class="token function">Dispose</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token function">Dispose</span><span class="token punctuation">(</span><span class="token boolean">true</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        GC<span class="token punctuation">.</span><span class="token function">SuppressFinalize</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+
+    <span class="token keyword">public</span> <span class="token keyword">virtual</span> <span class="token return-type class-name"><span class="token keyword">void</span></span> <span class="token function">Dispose</span><span class="token punctuation">(</span><span class="token class-name"><span class="token keyword">bool</span></span> disposing<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span> <span class="token punctuation">&#125;</span>
+    <span class="token preprocessor property">#<span class="token directive keyword">endregion</span></span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>代码注释较为全面了，看注释即可</p>
+<h2 id="22-使用方式"><a class="markdownIt-Anchor" href="#22-使用方式"></a> 2.2 使用方式</h2>
+<p>我们点击CustomForwardRendererData，在Inspector界面点击Add Renderer Feature，然后新建一个Custom Post Process Renderer Feature，名称随意不影响使用，这里取名为CustomPostProcessRendererFeature</p>
+<p>有了这个RendererFeature之后，我们就能随心所欲地添加我们的自定义后处理特效了！只要我们继承实现自己的CustomVolumeComponent类就行。由于篇幅原因，这部分内容放下一章讲。在这之前，这里先说明一下URP中默认提供的一些后处理特效，也是Volume的基本使用吧</p>
+<p>在Hierarchy右键，新建一个Volume/Global Volume，我们可以在Inspector界面中看到它需要传入一个Profile，这里我们在Project中右键Create/Volume Profile，名称就叫GlobalVolumeProfile好了。创建结束之后将其拖到Profile中。完成这一步之后，我们就可以给这个Profile添加各种后处理特效了，我们点击Global Volume的Inspector界面的Add Override，新增一个Bloom特效，现在我们试一下勾上这个特效的Threshold盒Intensity，数值分别填入0.5和1，我们就可以直接在Scene界面和Game界面观察到图片变亮了（请自己在场景放一张图片），有了Bloom的特效</p>
+<p>好了，我们下一章见</p>
+
+  </div>
+  <div>
+  
+  <div class="post-note note-warning copyright" style="margin-top: 42px">
+    <p><span style="font-weight: bold;">作者：</span><a target="_blank" rel="nofollow noopener noreferrer" href="https://numbfish-luo.github.io/about">Numbfish</a></p>
+    <p><span style="font-weight: bold;">文章链接：</span><a target="_blank" rel="nofollow noopener noreferrer" href="https://numbfish-luo.github.io/2022/02/22/urp-custom-post-effect/">https://numbfish-luo.github.io/2022/02/22/urp-custom-post-effect/</a></p>
+    <p><span style="font-weight: bold;">版权声明：</span>本博客所有文章除特别声明外，均采用<a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">CC BY-NC-SA 4.0 协议</a>。转载请注明出处！</p>
+  </div>
+  
+  </div>
+</article>
+<div class="nav">
+  
+  <div class="nav-item-prev">
+    <a href="/2022/02/22/dimensional-cut/" class="nav-link">
+      <i class="iconfont icon-left nav-prev-icon"></i>
+      <div>
+        <div class="nav-label">上一篇</div>
+        
+        <div class="nav-title">URP自定义后处理特效第一篇：次元斩！ </div>
+        
+      </div>
+    </a>
+  </div>
+  
+  
+  <div class="nav-item-next">
+    <a href="/2021/10/06/c-template/" class="nav-link">
+      <div>
+        <div class="nav-label">下一篇</div>
+        
+        <div class="nav-title">用C语言实现模板类的一些个人思路 </div>
+        
+      </div>
+      <i class="iconfont icon-right nav-next-icon"></i>
+    </a>
+  </div>
+  
+</div>
+
+<div class="card card-content toc-card" id="mobiletoc">
+  <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B8%80-%E5%85%B3%E4%BA%8Eurpuniversal-render-pipeline"><span class="toc-text"> 一、关于URP（Universal Render Pipeline）</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#11-%E4%BB%80%E4%B9%88%E6%98%AFurp"><span class="toc-text"> 1.1 什么是URP</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#12-%E6%88%91%E4%B8%BA%E4%BB%80%E4%B9%88%E7%94%A8urp"><span class="toc-text"> 1.2 我为什么用URP</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#13-%E6%80%8E%E4%B9%88%E5%88%87%E6%8D%A2%E6%88%90urp"><span class="toc-text"> 1.3 怎么切换成URP</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#131-%E5%AE%89%E8%A3%85urp"><span class="toc-text"> 1.3.1 安装URP</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#132-%E6%96%B0%E5%BB%BAurpasset"><span class="toc-text"> 1.3.2 新建URPAsset</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#133-%E5%88%87%E6%8D%A2%E4%B8%BA%E9%BB%98%E8%AE%A4%E6%98%AF%E6%94%AF%E6%8C%812d%E5%85%89%E7%85%A7%E7%9A%842drenderer%E4%B8%94%E4%BF%9D%E7%95%99customforwardrendererdata"><span class="toc-text"> 1.3.3 切换为默认是支持2D光照的2DRenderer，且保留CustomForwardRendererData</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#134-%E5%88%87%E6%8D%A2%E4%B8%BAurp%E6%B8%B2%E6%9F%93%E7%AE%A1%E7%BA%BF"><span class="toc-text"> 1.3.4 切换为URP渲染管线</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BA%8C-%E5%85%BC%E5%AE%B92d%E5%85%89%E7%85%A7%E7%9A%84urp%E8%87%AA%E5%AE%9A%E4%B9%89%E5%90%8E%E5%A4%84%E7%90%86%E7%89%B9%E6%95%88"><span class="toc-text"> 二、兼容2D光照的URP自定义后处理特效</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#21-%E6%9E%B6%E6%9E%84%E8%AE%BE%E8%AE%A1"><span class="toc-text"> 2.1 架构设计</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#22-%E4%BD%BF%E7%94%A8%E6%96%B9%E5%BC%8F"><span class="toc-text"> 2.2 使用方式</span></a></li></ol></li></ol>
+</div></main>
+          <aside class="left-column">
+            
+            <div class="card card-author">
+              
+<img src="/img/numbfish-icon-000.jpg" class="author-img">
+
+<p class="author-name">Numbfish</p>
+<p class="author-description">程策美全能型TA</p>
+<div class="author-message">
+  <a class="author-posts-count" href="/archives">
+    <span>6</span>
+    <span>文章</span>
+  </a>
+  <a class="author-categories-count" href="/categories">
+    <span>4</span>
+    <span>分类</span>
+  </a>
+  <a class="author-tags-count" href="/tags">
+    <span>6</span>
+    <span>标签</span>
+  </a>
+</div>
+
+            </div>
+            
+            <div class="sticky-tablet">
+  
+  
+  <article class="display-when-two-columns spacer">
+    <div class="card card-content toc-card">
+      <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B8%80-%E5%85%B3%E4%BA%8Eurpuniversal-render-pipeline"><span class="toc-text"> 一、关于URP（Universal Render Pipeline）</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#11-%E4%BB%80%E4%B9%88%E6%98%AFurp"><span class="toc-text"> 1.1 什么是URP</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#12-%E6%88%91%E4%B8%BA%E4%BB%80%E4%B9%88%E7%94%A8urp"><span class="toc-text"> 1.2 我为什么用URP</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#13-%E6%80%8E%E4%B9%88%E5%88%87%E6%8D%A2%E6%88%90urp"><span class="toc-text"> 1.3 怎么切换成URP</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#131-%E5%AE%89%E8%A3%85urp"><span class="toc-text"> 1.3.1 安装URP</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#132-%E6%96%B0%E5%BB%BAurpasset"><span class="toc-text"> 1.3.2 新建URPAsset</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#133-%E5%88%87%E6%8D%A2%E4%B8%BA%E9%BB%98%E8%AE%A4%E6%98%AF%E6%94%AF%E6%8C%812d%E5%85%89%E7%85%A7%E7%9A%842drenderer%E4%B8%94%E4%BF%9D%E7%95%99customforwardrendererdata"><span class="toc-text"> 1.3.3 切换为默认是支持2D光照的2DRenderer，且保留CustomForwardRendererData</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#134-%E5%88%87%E6%8D%A2%E4%B8%BAurp%E6%B8%B2%E6%9F%93%E7%AE%A1%E7%BA%BF"><span class="toc-text"> 1.3.4 切换为URP渲染管线</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BA%8C-%E5%85%BC%E5%AE%B92d%E5%85%89%E7%85%A7%E7%9A%84urp%E8%87%AA%E5%AE%9A%E4%B9%89%E5%90%8E%E5%A4%84%E7%90%86%E7%89%B9%E6%95%88"><span class="toc-text"> 二、兼容2D光照的URP自定义后处理特效</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#21-%E6%9E%B6%E6%9E%84%E8%AE%BE%E8%AE%A1"><span class="toc-text"> 2.1 架构设计</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#22-%E4%BD%BF%E7%94%A8%E6%96%B9%E5%BC%8F"><span class="toc-text"> 2.2 使用方式</span></a></li></ol></li></ol>
+    </div>
+  </article>
+  
+  
+  <article class="card card-content">
+    <div class="categories-card">
+  <div class="categories-header"><i class="iconfont icon-fenlei" style="padding-right: 2px;"></i>分类</div>
+  <div class="categories-list">
+    
+      <a href="/categories/Unity">
+        <div class="categories-list-item">
+          Unity
+          <span class="categories-list-item-badge">3</span>
+        </div>
+      </a>
+    
+      <a href="/categories/Hexo">
+        <div class="categories-list-item">
+          Hexo
+          <span class="categories-list-item-badge">1</span>
+        </div>
+      </a>
+    
+      <a href="/categories/C#">
+        <div class="categories-list-item">
+          C#
+          <span class="categories-list-item-badge">1</span>
+        </div>
+      </a>
+    
+      <a href="/categories/C">
+        <div class="categories-list-item">
+          C
+          <span class="categories-list-item-badge">1</span>
+        </div>
+      </a>
+    
+  </div>
+</div>
+  </article>
+  
+  <article class="card card-content">
+    <div class="tags-card">
+  <div class="tags-header"><i class="iconfont icon-biaoqian" style="padding-right: 2px;"></i>热门标签</div>
+  <div class="tags-list">
+    
+    <a href="\tags\Unity" title="Unity"><div class="tags-list-item">Unity</div></a>
+    
+    <a href="\tags\URP" title="URP"><div class="tags-list-item">URP</div></a>
+    
+    <a href="\tags\后处理" title="后处理"><div class="tags-list-item">后处理</div></a>
+    
+    <a href="\tags\Hexo" title="Hexo"><div class="tags-list-item">Hexo</div></a>
+    
+    <a href="\tags\C#" title="C#"><div class="tags-list-item">C#</div></a>
+    
+    <a href="\tags\C" title="C"><div class="tags-list-item">C</div></a>
+    
+  </div>
+</div>
+  </article>
+  
+  
+</div>
+          </aside>
+          <aside class="right-column">
+            <div class="sticky-widescreen">
+  
+  
+  <article class="card card-content toc-card">
+    <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B8%80-%E5%85%B3%E4%BA%8Eurpuniversal-render-pipeline"><span class="toc-text"> 一、关于URP（Universal Render Pipeline）</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#11-%E4%BB%80%E4%B9%88%E6%98%AFurp"><span class="toc-text"> 1.1 什么是URP</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#12-%E6%88%91%E4%B8%BA%E4%BB%80%E4%B9%88%E7%94%A8urp"><span class="toc-text"> 1.2 我为什么用URP</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#13-%E6%80%8E%E4%B9%88%E5%88%87%E6%8D%A2%E6%88%90urp"><span class="toc-text"> 1.3 怎么切换成URP</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#131-%E5%AE%89%E8%A3%85urp"><span class="toc-text"> 1.3.1 安装URP</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#132-%E6%96%B0%E5%BB%BAurpasset"><span class="toc-text"> 1.3.2 新建URPAsset</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#133-%E5%88%87%E6%8D%A2%E4%B8%BA%E9%BB%98%E8%AE%A4%E6%98%AF%E6%94%AF%E6%8C%812d%E5%85%89%E7%85%A7%E7%9A%842drenderer%E4%B8%94%E4%BF%9D%E7%95%99customforwardrendererdata"><span class="toc-text"> 1.3.3 切换为默认是支持2D光照的2DRenderer，且保留CustomForwardRendererData</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#134-%E5%88%87%E6%8D%A2%E4%B8%BAurp%E6%B8%B2%E6%9F%93%E7%AE%A1%E7%BA%BF"><span class="toc-text"> 1.3.4 切换为URP渲染管线</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BA%8C-%E5%85%BC%E5%AE%B92d%E5%85%89%E7%85%A7%E7%9A%84urp%E8%87%AA%E5%AE%9A%E4%B9%89%E5%90%8E%E5%A4%84%E7%90%86%E7%89%B9%E6%95%88"><span class="toc-text"> 二、兼容2D光照的URP自定义后处理特效</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#21-%E6%9E%B6%E6%9E%84%E8%AE%BE%E8%AE%A1"><span class="toc-text"> 2.1 架构设计</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#22-%E4%BD%BF%E7%94%A8%E6%96%B9%E5%BC%8F"><span class="toc-text"> 2.2 使用方式</span></a></li></ol></li></ol>
+  </article>
+  
+  
+  <article class="card card-content">
+    <div class="recent-posts-card">
+  <div class="recent-posts-header"><i class="iconfont icon-wenzhang_huaban" style="padding-right: 2px;"></i>最近文章</div>
+  <div class="recent-posts-list">
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2024-08-04</div>
+        <a href="/2024/08/04/how-to-create-a-blog-with-hexo/"><div class="recent-posts-item-content">如何用hexo创建个人博客</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2022-02-24</div>
+        <a href="/2022/02/24/2d-water/"><div class="recent-posts-item-content">URP自定义后处理特效第二篇：水波扭曲</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2022-02-22</div>
+        <a href="/2022/02/22/dimensional-cut/"><div class="recent-posts-item-content">URP自定义后处理特效第一篇：次元斩！</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2022-02-22</div>
+        <a href="/2022/02/22/urp-custom-post-effect/"><div class="recent-posts-item-content">URP自定义后处理特效第零篇：前期准备</div></a>
+      </div>
+    
+  </div>
+</div>
+  </article>
+  
+  
+</div>
+          </aside>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <footer class="footer">
+  <div class="footer-container">
+    <div>
+      <div class="footer-dsc">
+        <span>Copyright ©
+          
+          2020 -
+          
+          2024
+        </span>
+        <a href="/" class="footer-link">Numbfish的个人博客 </a>
+      </div>
+    </div>
+
+    
+    <div class="footer-dsc">
+      
+      
+      Powered by
+      <a href="https://hexo.io/" class="footer-link" target="_blank" rel="nofollow noopener noreferrer">&nbsp;Hexo </a>
+      
+      
+      <span>&nbsp;|&nbsp;</span>
+      
+      
+      
+      Theme -
+      <a href="https://github.com/theme-kaze" class="footer-link" target="_blank"
+        rel="nofollow noopener noreferrer">&nbsp;Kaze</a>
+      
+    </div>
+    
+    
+    
+    
+</footer>
+  <a role="button" id="scrollbutton" class="basebutton" >
+  <i class="iconfont icon-arrowleft button-icon"></i>
+</a>
+<a role="button" id="menubutton" class="basebutton">
+  <i class="iconfont icon-menu button-icon"></i>
+</a>
+<a role="button" id="popbutton" class="basebutton">
+  <i class="iconfont icon-expand button-icon"></i>
+</a>
+<a role="button" id="darkbutton" class="basebutton darkwidget">
+  <i class="iconfont icon-weather button-icon"></i>
+</a>
+
+  
+  
+  
+
+  
+  
+    
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.css">
+
+  
+
+  
+  
+  <script>
+  var addImgLayout = function () {
+    var img = document.querySelectorAll('.post-content img');
+    var i;
+    for (i = 0; i < img.length; i++) {
+      var wrapper = document.createElement('a');
+      wrapper.setAttribute('data-fslightbox', 'gallery');
+      wrapper.setAttribute('href', img[i].getAttribute('data-src'));
+      wrapper.setAttribute('style', 'width: 100%; display: flex; justify-content: center;');
+      img[i].parentElement.insertBefore(wrapper, img[i]);
+      wrapper.appendChild(img[i]);
+    }
+    refreshFsLightbox();
+  }
+</script>
+<script>loadScript("//cdn.jsdelivr.net/npm/fslightbox@3.1.0/index.min.js", addImgLayout)</script>
+  
+  
+  
+<script src="/js/main.js"></script>
+
+  
+  
+  <script>
+    var addLazyload = function () {
+      var observer = lozad('.lozad', {
+        load: function (el) {
+          el.srcset = el.getAttribute('data-src');
+        },
+        loaded: function (el) {
+          el.classList.add('loaded');
+        }
+      });
+      observer.observe();
+    }
+  </script>
+  <script>loadScript("/js/lib/lozad.min.js", addLazyload)</script>
+  
+  
+</body>
+
+</html>

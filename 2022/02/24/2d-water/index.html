@@ -174,13 +174,21 @@
   
   </header>
   <div id="section" class="post-content">
-    <h1 id="一、效果展示"><a href="#一、效果展示" class="headerlink" title="一、效果展示"></a>一、效果展示</h1><p><img src="/img/2d-water-001.gif" alt="" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/img/2d-water-001.gif" class="lozad post-image"></p>
-<h1 id="二、思路"><a href="#二、思路" class="headerlink" title="二、思路"></a>二、思路</h1><h2 id="2-1-确定参数"><a href="#2-1-确定参数" class="headerlink" title="2.1 确定参数"></a>2.1 确定参数</h2><h3 id="2-1-1-扭曲图与相关参数"><a href="#2-1-1-扭曲图与相关参数" class="headerlink" title="2.1.1 扭曲图与相关参数"></a>2.1.1 扭曲图与相关参数</h3><p><img src="/img/2d-water-002.png" alt="" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/img/2d-water-002.png" class="lozad post-image"></p>
+    <h1 id="一-效果展示"><a class="markdownIt-Anchor" href="#一-效果展示"></a> 一、效果展示</h1>
+<p><img src="/img/2d-water-001.gif" alt="" / srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/img/2d-water-001.gif" class="lozad post-image"></p>
+<h1 id="二-思路"><a class="markdownIt-Anchor" href="#二-思路"></a> 二、思路</h1>
+<h2 id="21-确定参数"><a class="markdownIt-Anchor" href="#21-确定参数"></a> 2.1 确定参数</h2>
+<h3 id="211-扭曲图与相关参数"><a class="markdownIt-Anchor" href="#211-扭曲图与相关参数"></a> 2.1.1 扭曲图与相关参数</h3>
+<p><img src="/img/2d-water-002.png" alt="" / srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="/img/2d-water-002.png" class="lozad post-image"></p>
 <p>使用的扭曲噪声图是这张，用其R和G通道来做主贴图扭曲的参数，计算公式定为：<code>float2 mainTexOffset = -1 * (mapColor * _Power - (_Power * 0.5))</code>，其中<code>mapColor</code>是取自于扭曲噪声图的颜色，取值位置随时间改变，改变的规则为：<code>float2 mapOffset = float2(frac(_Time.y * _DistortionSpeed), 0)</code>，<code>_DistortionSpeed</code>为扭曲图x轴移动速度，<code>_Power</code>为扭曲强度</p>
-<h3 id="2-1-2-遮罩"><a href="#2-1-2-遮罩" class="headerlink" title="2.1.2 遮罩"></a>2.1.2 遮罩</h3><p>如果不添加遮罩，那么扭曲是对整张图进行扭曲的，于是我们需要有一张遮罩图，黑色为无扭曲效果，白色为有扭曲效果，而灰色则表示在这两者之间。为了达到水面分界线清晰的效果，我们需要对其进行一个step操作，颜色亮度低于0.5的视为黑色，否则视为白色，于是有此公式：<code>float mask = step(0.5, tex2D(_Mask, i.uv))</code>，<code>mask</code>的结果只有0和1两种</p>
-<h3 id="2-1-3-水的颜色"><a href="#2-1-3-水的颜色" class="headerlink" title="2.1.3 水的颜色"></a>2.1.3 水的颜色</h3><p>对于<code>mask</code>为0的地方，不进行改色，而对于<code>mask</code>为1的地方则需要添加水的颜色，于是颜色的计算可以这样写：<code>float4 finalColor = (mainTexColor * !mask + mainTexColor + _Color * mask) * 0.5</code>，其中<code>mainTexColor</code>为原本贴图的颜色，<code>_Color</code>为指定的水的颜色</p>
-<h3 id="2-1-4-水面正弦波"><a href="#2-1-4-水面正弦波" class="headerlink" title="2.1.4 水面正弦波"></a>2.1.4 水面正弦波</h3><p>如果只完成了上述操作，那么只能创造出一个矩形的水区域。为了添加水面波动，我们需要加上一个正弦波。公式我们定义为：<code>float2 waveUv = i.uv + float2(0, _Peak * (sin(_WaveFrequency * i.uv.x + waveOffset) - 1))</code>，其中<code>_Peak</code>为正弦波峰值，<code>_WaveFrequency</code>为正弦波频率，<code>waveOffset</code>为正弦波偏移量，其值随时间变化，公式为：<code>float waveOffset = _Time.y * _WaveSpeed</code>，其中<code>_WaveSpeed</code>为正弦波移动速度</p>
-<h3 id="2-1-5-Shader代码"><a href="#2-1-5-Shader代码" class="headerlink" title="2.1.5 Shader代码"></a>2.1.5 Shader代码</h3><p>综上，我们的最终代码是这样的：</p>
+<h3 id="212-遮罩"><a class="markdownIt-Anchor" href="#212-遮罩"></a> 2.1.2 遮罩</h3>
+<p>如果不添加遮罩，那么扭曲是对整张图进行扭曲的，于是我们需要有一张遮罩图，黑色为无扭曲效果，白色为有扭曲效果，而灰色则表示在这两者之间。为了达到水面分界线清晰的效果，我们需要对其进行一个step操作，颜色亮度低于0.5的视为黑色，否则视为白色，于是有此公式：<code>float mask = step(0.5, tex2D(_Mask, i.uv))</code>，<code>mask</code>的结果只有0和1两种</p>
+<h3 id="213-水的颜色"><a class="markdownIt-Anchor" href="#213-水的颜色"></a> 2.1.3 水的颜色</h3>
+<p>对于<code>mask</code>为0的地方，不进行改色，而对于<code>mask</code>为1的地方则需要添加水的颜色，于是颜色的计算可以这样写：<code>float4 finalColor = (mainTexColor * !mask + mainTexColor + _Color * mask) * 0.5</code>，其中<code>mainTexColor</code>为原本贴图的颜色，<code>_Color</code>为指定的水的颜色</p>
+<h3 id="214-水面正弦波"><a class="markdownIt-Anchor" href="#214-水面正弦波"></a> 2.1.4 水面正弦波</h3>
+<p>如果只完成了上述操作，那么只能创造出一个矩形的水区域。为了添加水面波动，我们需要加上一个正弦波。公式我们定义为：<code>float2 waveUv = i.uv + float2(0, _Peak * (sin(_WaveFrequency * i.uv.x + waveOffset) - 1))</code>，其中<code>_Peak</code>为正弦波峰值，<code>_WaveFrequency</code>为正弦波频率，<code>waveOffset</code>为正弦波偏移量，其值随时间变化，公式为：<code>float waveOffset = _Time.y * _WaveSpeed</code>，其中<code>_WaveSpeed</code>为正弦波移动速度</p>
+<h3 id="215-shader代码"><a class="markdownIt-Anchor" href="#215-shader代码"></a> 2.1.5 Shader代码</h3>
+<p>综上，我们的最终代码是这样的：</p>
 <pre class="line-numbers language-hlsl" data-language="hlsl"><code class="language-hlsl">Shader <span class="token string">"Custom/Water"</span> <span class="token punctuation">&#123;</span>
     Properties <span class="token punctuation">&#123;</span>
         <span class="token function">_MainTex</span><span class="token punctuation">(</span><span class="token string">"Main Texture"</span><span class="token punctuation">,</span> 2D<span class="token punctuation">)</span> <span class="token operator">=</span> <span class="token string">""</span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span>
@@ -274,7 +282,8 @@
         <span class="token punctuation">&#125;</span>
     <span class="token punctuation">&#125;</span>
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h2 id="2-2-遮罩计算与优化"><a href="#2-2-遮罩计算与优化" class="headerlink" title="2.2 遮罩计算与优化"></a>2.2 遮罩计算与优化</h2><p>另外我们还需要有水波扭曲范围的计算，代码为：</p>
+<h2 id="22-遮罩计算与优化"><a class="markdownIt-Anchor" href="#22-遮罩计算与优化"></a> 2.2 遮罩计算与优化</h2>
+<p>另外我们还需要有水波扭曲范围的计算，代码为：</p>
 <pre class="line-numbers language-csharp" data-language="csharp"><code class="language-csharp"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Water</span> <span class="token punctuation">:</span> <span class="token type-list"><span class="token class-name">MonoBehaviour</span></span> <span class="token punctuation">&#123;</span>
     <span class="token punctuation">[</span><span class="token attribute"><span class="token class-name">SerializeField</span></span><span class="token punctuation">]</span> <span class="token keyword">private</span> <span class="token class-name">BoxCollider2D</span> boxCollider2D<span class="token punctuation">;</span>
     <span class="token keyword">public</span> <span class="token return-type class-name">Vector2</span> LeftBottom <span class="token punctuation">&#123;</span> <span class="token keyword">get</span> <span class="token operator">=></span> <span class="token punctuation">(</span>Vector2<span class="token punctuation">)</span>transform<span class="token punctuation">.</span>position <span class="token operator">+</span> boxCollider2D<span class="token punctuation">.</span>offset <span class="token operator">-</span> <span class="token number">0.5f</span> <span class="token operator">*</span> boxCollider2D<span class="token punctuation">.</span>size<span class="token punctuation">;</span> <span class="token punctuation">&#125;</span>
@@ -374,12 +383,12 @@
 <div class="nav">
   
   <div class="nav-item-prev">
-    <a href="/2024/08/04/how-to-create-a-blog-with-hexo/" class="nav-link">
+    <a href="/2024/02/01/ggj-2024/" class="nav-link">
       <i class="iconfont icon-left nav-prev-icon"></i>
       <div>
         <div class="nav-label">上一篇</div>
         
-        <div class="nav-title">如何用hexo创建个人博客 </div>
+        <div class="nav-title">Global Game Jam 2024，Solo作品《纸板怪兽》 </div>
         
       </div>
     </a>
@@ -402,7 +411,7 @@
 
 <div class="card card-content toc-card" id="mobiletoc">
   <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
-<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E6%95%88%E6%9E%9C%E5%B1%95%E7%A4%BA"><span class="toc-text">一、效果展示</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E6%80%9D%E8%B7%AF"><span class="toc-text">二、思路</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#2-1-%E7%A1%AE%E5%AE%9A%E5%8F%82%E6%95%B0"><span class="toc-text">2.1 确定参数</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-1-%E6%89%AD%E6%9B%B2%E5%9B%BE%E4%B8%8E%E7%9B%B8%E5%85%B3%E5%8F%82%E6%95%B0"><span class="toc-text">2.1.1 扭曲图与相关参数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-2-%E9%81%AE%E7%BD%A9"><span class="toc-text">2.1.2 遮罩</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-3-%E6%B0%B4%E7%9A%84%E9%A2%9C%E8%89%B2"><span class="toc-text">2.1.3 水的颜色</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-4-%E6%B0%B4%E9%9D%A2%E6%AD%A3%E5%BC%A6%E6%B3%A2"><span class="toc-text">2.1.4 水面正弦波</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-5-Shader%E4%BB%A3%E7%A0%81"><span class="toc-text">2.1.5 Shader代码</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-2-%E9%81%AE%E7%BD%A9%E8%AE%A1%E7%AE%97%E4%B8%8E%E4%BC%98%E5%8C%96"><span class="toc-text">2.2 遮罩计算与优化</span></a></li></ol></li></ol>
+<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B8%80-%E6%95%88%E6%9E%9C%E5%B1%95%E7%A4%BA"><span class="toc-text"> 一、效果展示</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BA%8C-%E6%80%9D%E8%B7%AF"><span class="toc-text"> 二、思路</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#21-%E7%A1%AE%E5%AE%9A%E5%8F%82%E6%95%B0"><span class="toc-text"> 2.1 确定参数</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#211-%E6%89%AD%E6%9B%B2%E5%9B%BE%E4%B8%8E%E7%9B%B8%E5%85%B3%E5%8F%82%E6%95%B0"><span class="toc-text"> 2.1.1 扭曲图与相关参数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#212-%E9%81%AE%E7%BD%A9"><span class="toc-text"> 2.1.2 遮罩</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#213-%E6%B0%B4%E7%9A%84%E9%A2%9C%E8%89%B2"><span class="toc-text"> 2.1.3 水的颜色</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#214-%E6%B0%B4%E9%9D%A2%E6%AD%A3%E5%BC%A6%E6%B3%A2"><span class="toc-text"> 2.1.4 水面正弦波</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#215-shader%E4%BB%A3%E7%A0%81"><span class="toc-text"> 2.1.5 Shader代码</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#22-%E9%81%AE%E7%BD%A9%E8%AE%A1%E7%AE%97%E4%B8%8E%E4%BC%98%E5%8C%96"><span class="toc-text"> 2.2 遮罩计算与优化</span></a></li></ol></li></ol>
 </div></main>
           <aside class="left-column">
             
@@ -414,7 +423,7 @@
 <p class="author-description">程策美全能型TA</p>
 <div class="author-message">
   <a class="author-posts-count" href="/archives">
-    <span>12</span>
+    <span>13</span>
     <span>文章</span>
   </a>
   <a class="author-categories-count" href="/categories">
@@ -435,7 +444,7 @@
   <article class="display-when-two-columns spacer">
     <div class="card card-content toc-card">
       <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
-<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E6%95%88%E6%9E%9C%E5%B1%95%E7%A4%BA"><span class="toc-text">一、效果展示</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E6%80%9D%E8%B7%AF"><span class="toc-text">二、思路</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#2-1-%E7%A1%AE%E5%AE%9A%E5%8F%82%E6%95%B0"><span class="toc-text">2.1 确定参数</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-1-%E6%89%AD%E6%9B%B2%E5%9B%BE%E4%B8%8E%E7%9B%B8%E5%85%B3%E5%8F%82%E6%95%B0"><span class="toc-text">2.1.1 扭曲图与相关参数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-2-%E9%81%AE%E7%BD%A9"><span class="toc-text">2.1.2 遮罩</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-3-%E6%B0%B4%E7%9A%84%E9%A2%9C%E8%89%B2"><span class="toc-text">2.1.3 水的颜色</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-4-%E6%B0%B4%E9%9D%A2%E6%AD%A3%E5%BC%A6%E6%B3%A2"><span class="toc-text">2.1.4 水面正弦波</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-5-Shader%E4%BB%A3%E7%A0%81"><span class="toc-text">2.1.5 Shader代码</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-2-%E9%81%AE%E7%BD%A9%E8%AE%A1%E7%AE%97%E4%B8%8E%E4%BC%98%E5%8C%96"><span class="toc-text">2.2 遮罩计算与优化</span></a></li></ol></li></ol>
+<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B8%80-%E6%95%88%E6%9E%9C%E5%B1%95%E7%A4%BA"><span class="toc-text"> 一、效果展示</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BA%8C-%E6%80%9D%E8%B7%AF"><span class="toc-text"> 二、思路</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#21-%E7%A1%AE%E5%AE%9A%E5%8F%82%E6%95%B0"><span class="toc-text"> 2.1 确定参数</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#211-%E6%89%AD%E6%9B%B2%E5%9B%BE%E4%B8%8E%E7%9B%B8%E5%85%B3%E5%8F%82%E6%95%B0"><span class="toc-text"> 2.1.1 扭曲图与相关参数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#212-%E9%81%AE%E7%BD%A9"><span class="toc-text"> 2.1.2 遮罩</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#213-%E6%B0%B4%E7%9A%84%E9%A2%9C%E8%89%B2"><span class="toc-text"> 2.1.3 水的颜色</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#214-%E6%B0%B4%E9%9D%A2%E6%AD%A3%E5%BC%A6%E6%B3%A2"><span class="toc-text"> 2.1.4 水面正弦波</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#215-shader%E4%BB%A3%E7%A0%81"><span class="toc-text"> 2.1.5 Shader代码</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#22-%E9%81%AE%E7%BD%A9%E8%AE%A1%E7%AE%97%E4%B8%8E%E4%BC%98%E5%8C%96"><span class="toc-text"> 2.2 遮罩计算与优化</span></a></li></ol></li></ol>
     </div>
   </article>
   
@@ -445,6 +454,13 @@
   <div class="categories-header"><i class="iconfont icon-fenlei" style="padding-right: 2px;"></i>分类</div>
   <div class="categories-list">
     
+      <a href="/categories/Unity">
+        <div class="categories-list-item">
+          Unity
+          <span class="categories-list-item-badge">4</span>
+        </div>
+      </a>
+    
       <a href="/categories/编程">
         <div class="categories-list-item">
           编程
@@ -452,9 +468,9 @@
         </div>
       </a>
     
-      <a href="/categories/Unity">
+      <a href="/categories/GameJam">
         <div class="categories-list-item">
-          Unity
+          GameJam
           <span class="categories-list-item-badge">4</span>
         </div>
       </a>
@@ -470,13 +486,6 @@
         <div class="categories-list-item">
           网页
           <span class="categories-list-item-badge">1</span>
-        </div>
-      </a>
-    
-      <a href="/categories/GameJam">
-        <div class="categories-list-item">
-          GameJam
-          <span class="categories-list-item-badge">3</span>
         </div>
       </a>
     
@@ -509,7 +518,7 @@
   
   <article class="card card-content toc-card">
     <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
-<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E6%95%88%E6%9E%9C%E5%B1%95%E7%A4%BA"><span class="toc-text">一、效果展示</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E6%80%9D%E8%B7%AF"><span class="toc-text">二、思路</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#2-1-%E7%A1%AE%E5%AE%9A%E5%8F%82%E6%95%B0"><span class="toc-text">2.1 确定参数</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-1-%E6%89%AD%E6%9B%B2%E5%9B%BE%E4%B8%8E%E7%9B%B8%E5%85%B3%E5%8F%82%E6%95%B0"><span class="toc-text">2.1.1 扭曲图与相关参数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-2-%E9%81%AE%E7%BD%A9"><span class="toc-text">2.1.2 遮罩</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-3-%E6%B0%B4%E7%9A%84%E9%A2%9C%E8%89%B2"><span class="toc-text">2.1.3 水的颜色</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-4-%E6%B0%B4%E9%9D%A2%E6%AD%A3%E5%BC%A6%E6%B3%A2"><span class="toc-text">2.1.4 水面正弦波</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-5-Shader%E4%BB%A3%E7%A0%81"><span class="toc-text">2.1.5 Shader代码</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-2-%E9%81%AE%E7%BD%A9%E8%AE%A1%E7%AE%97%E4%B8%8E%E4%BC%98%E5%8C%96"><span class="toc-text">2.2 遮罩计算与优化</span></a></li></ol></li></ol>
+<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B8%80-%E6%95%88%E6%9E%9C%E5%B1%95%E7%A4%BA"><span class="toc-text"> 一、效果展示</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BA%8C-%E6%80%9D%E8%B7%AF"><span class="toc-text"> 二、思路</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#21-%E7%A1%AE%E5%AE%9A%E5%8F%82%E6%95%B0"><span class="toc-text"> 2.1 确定参数</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#211-%E6%89%AD%E6%9B%B2%E5%9B%BE%E4%B8%8E%E7%9B%B8%E5%85%B3%E5%8F%82%E6%95%B0"><span class="toc-text"> 2.1.1 扭曲图与相关参数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#212-%E9%81%AE%E7%BD%A9"><span class="toc-text"> 2.1.2 遮罩</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#213-%E6%B0%B4%E7%9A%84%E9%A2%9C%E8%89%B2"><span class="toc-text"> 2.1.3 水的颜色</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#214-%E6%B0%B4%E9%9D%A2%E6%AD%A3%E5%BC%A6%E6%B3%A2"><span class="toc-text"> 2.1.4 水面正弦波</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#215-shader%E4%BB%A3%E7%A0%81"><span class="toc-text"> 2.1.5 Shader代码</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#22-%E9%81%AE%E7%BD%A9%E8%AE%A1%E7%AE%97%E4%B8%8E%E4%BC%98%E5%8C%96"><span class="toc-text"> 2.2 遮罩计算与优化</span></a></li></ol></li></ol>
   </article>
   
   
@@ -529,13 +538,13 @@
       </div>
     
       <div class="recent-posts-item">
-        <div class="recent-posts-item-title">2022-02-24</div>
-        <a href="/2022/02/24/2d-water/"><div class="recent-posts-item-content">URP自定义后处理特效第二篇：水波扭曲</div></a>
+        <div class="recent-posts-item-title">2024-02-01</div>
+        <a href="/2024/02/01/ggj-2024/"><div class="recent-posts-item-content">Global Game Jam 2024，Solo作品《纸板怪兽》</div></a>
       </div>
     
       <div class="recent-posts-item">
-        <div class="recent-posts-item-title">2022-02-22</div>
-        <a href="/2022/02/22/dimensional-cut/"><div class="recent-posts-item-content">URP自定义后处理特效第一篇：次元斩！</div></a>
+        <div class="recent-posts-item-title">2022-02-24</div>
+        <a href="/2022/02/24/2d-water/"><div class="recent-posts-item-content">URP自定义后处理特效第二篇：水波扭曲</div></a>
       </div>
     
   </div>

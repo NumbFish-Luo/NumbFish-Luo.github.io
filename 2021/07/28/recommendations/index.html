@@ -1,0 +1,660 @@
+<!DOCTYPE html>
+<html>
+<meta  lang="zh-CN" >
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+    content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="theme-color" content="#fff" id="theme-color">
+  <link rel="icon" href="/img/Kaze.png">
+  <title>Numbfish的个人博客</title>
+  <script>
+    // control reverse button
+    var reverseDarkList = {
+      dark: 'light',
+      light: 'dark'
+    };
+    var themeColor = {
+      dark: '#1c1c1e',
+      light: '#fff'
+    }
+    // get the data of css prefers-color-scheme
+    var getCssMediaQuery = function() {
+      return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    };
+    // reverse current darkmode setting function
+    var reverseDarkModeSetting = function() {
+      var setting = localStorage.getItem('user-color-scheme');
+      if(reverseDarkList[setting]) {
+        setting = reverseDarkList[setting];
+      } else if(setting === null) {
+        setting = reverseDarkList[getCssMediaQuery()];
+      } else {
+        return;
+      }
+      localStorage.setItem('user-color-scheme', setting);
+      return setting;
+    };
+    // apply current darkmode setting
+    var setDarkmode = function(mode) {
+      var setting = mode || localStorage.getItem('user-color-scheme');
+      if(setting === getCssMediaQuery()) {
+        document.documentElement.removeAttribute('data-user-color-scheme');
+        localStorage.removeItem('user-color-scheme');
+        document.getElementById('theme-color').content = themeColor[setting];
+      } else if(reverseDarkList[setting]) {
+        document.documentElement.setAttribute('data-user-color-scheme', setting);
+        document.getElementById('theme-color').content = themeColor[setting];
+      } else {
+        document.documentElement.removeAttribute('data-user-color-scheme');
+        localStorage.removeItem('user-color-scheme');
+        document.getElementById('theme-color').content = themeColor[getCssMediaQuery()];
+      }
+    };
+    setDarkmode();
+  </script>
+  <script>
+    function loadScript(url, cb) {
+      var script = document.createElement('script');
+      script.src = url;
+      if (cb) script.onload = cb;
+      script.async = true;
+      document.body.appendChild(script);
+    }
+  </script>
+  
+  <link rel="preload" href="//at.alicdn.com/t/font_1946621_vpj3dq9ceqa.css" as="style" >
+  <link rel="preload" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css" as="style" >
+  
+  <link rel="preload" href="//cdn.jsdelivr.net/npm/fslightbox@3.1.0/index.min.js" as="script">
+  
+  
+  <link rel="preload" href="/js/lib/lozad.min.js" as="script">
+  
+  
+  
+  
+  
+  <link rel="prefetch" href="//cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.css" as="script">
+  
+  
+  
+  
+  
+<link rel="stylesheet" href="/css/main.css">
+
+  
+  
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1946621_vpj3dq9ceqa.css">
+
+  
+  
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css">
+
+  
+  
+  
+  
+  
+  <link href="/js/lib/prism/prism-tomorrow.min.css" rel="stylesheet" data-prism="prism-tomorrow">
+  
+  
+  
+<link rel="stylesheet" href="/js/lib/prism/prism-line-numbers.min.css">
+
+  
+  
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+<body>
+  <div class="wrapper">
+    
+    <nav class="navbar">
+  <div class="navbar-logo">
+    <span class="navbar-logo-main">
+      
+      <img class="navbar-logo-img" src="/img/Kaze.png">
+      
+      <span class="navbar-logo-dsc">Numbfish的个人博客</span>
+    </span>
+  </div>
+  <div class="navbar-menu">
+    
+    <a href="/" class="navbar-menu-item">首页 </a>
+    
+    <a href="/archives" class="navbar-menu-item">归档 </a>
+    
+    <a href="/tags" class="navbar-menu-item">标签 </a>
+    
+    <a href="/categories" class="navbar-menu-item">分类 </a>
+    
+    <a href="/about" class="navbar-menu-item">关于 </a>
+    
+    <a href="/links" class="navbar-menu-item">友链 </a>
+    
+    <a class="navbar-menu-item darknavbar" id="dark"><i class="iconfont icon-weather"></i></a>
+  </div>
+</nav>
+    
+    <div class="section-wrap">
+      <div class="container">
+        <div class="columns">
+          <main class="main-column">
+<div class="image-wrapper">
+  <img src="/img/recommendations-000.jpg" data-src="/img/recommendations-000.jpg"
+    srcset="/img/recommendations-000.jpg"
+    class="image lozad">
+</div>
+
+<article class="card card-content">
+  <header>
+    <h1 class="post-title">
+      安利列表
+    </h1>
+  </header>
+  <div class="post-meta post-show-meta">
+    <time datetime="2021-07-28T12:00:00.000Z" style="display: flex; align-items: center;">
+      <i class="iconfont icon-calendar" style="margin-right: 2px;"></i>
+      <span>2021-07-28</span>
+    </time>
+    
+    <span class="dot"></span>
+    
+    <a href="/categories/杂项/" class="post-meta-link">杂项</a>
+    
+    
+    
+    <span class="dot"></span>
+    <span>1.2k 字</span>
+    
+  </div>
+  
+  </header>
+  <div id="section" class="post-content">
+    <blockquote>
+<p>封面图：秦皇岛阿那亚艺术中心内部，个人摄影作品</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th>名称</th>
+<th>标签</th>
+<th>描述</th>
+<th>地址/命令行</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Everything</td>
+<td>搜索</td>
+<td>一个比Windows自带的搜索工具要快n倍的搜索工具</td>
+<td><a target="_blank" rel="noopener" href="http://www.voidtools.com/">http://www.voidtools.com/</a></td>
+</tr>
+<tr>
+<td>Uninstall Tool</td>
+<td>卸载</td>
+<td>一个比Windows自带的卸载工具要快n倍的卸载工具</td>
+<td><a target="_blank" rel="noopener" href="https://www.crystalidea.com/uninstall-tool">https://www.crystalidea.com/uninstall-tool</a></td>
+</tr>
+<tr>
+<td>TicKeys</td>
+<td>玩具</td>
+<td>模拟机械键盘按键音的程序，打字的时候很爽:-)</td>
+<td><a target="_blank" rel="noopener" href="http://www.yingdev.com/projects/tickeys">http://www.yingdev.com/projects/tickeys</a></td>
+</tr>
+<tr>
+<td>PowerMode插件</td>
+<td>编程、玩具</td>
+<td>敲代码的时候屏幕会跳动，配合TicKeys食用效果更佳:-)</td>
+<td><a target="_blank" rel="noopener" href="https://github.com/codeinthedark/awesome-power-mode">https://github.com/codeinthedark/awesome-power-mode</a></td>
+</tr>
+<tr>
+<td>EV录屏</td>
+<td>视频录制</td>
+<td>国内的免费的录屏工具，没有水印</td>
+<td><a target="_blank" rel="noopener" href="https://www.ieway.cn/evcapture.html">https://www.ieway.cn/evcapture.html</a></td>
+</tr>
+<tr>
+<td>LICEcap</td>
+<td>视频录制</td>
+<td>开源的、简单易用的Gif录屏工具，配合ps后期编辑效果更佳</td>
+<td><a target="_blank" rel="noopener" href="https://www.cockos.com/licecap/">https://www.cockos.com/licecap/</a></td>
+</tr>
+<tr>
+<td>Umlet</td>
+<td>编程</td>
+<td>免费的、很好用的UML类图编辑工具，学编程设计模式的朋友可以用一下</td>
+<td><a target="_blank" rel="noopener" href="https://www.umlet.com/">https://www.umlet.com/</a></td>
+</tr>
+<tr>
+<td>MagicaVoxel</td>
+<td>绘画</td>
+<td>立体像素画绘图工具，像在玩mc的感觉（晕3D的朋友慎用…），可惜绘图区域有限</td>
+<td><a target="_blank" rel="noopener" href="https://ephtracy.github.io/">https://ephtracy.github.io/</a></td>
+</tr>
+<tr>
+<td>0CC-FamiTracker</td>
+<td>音乐</td>
+<td>芯片音乐（chiptune）编辑器，可以用它做出像超级玛丽那样的背景音乐</td>
+<td><a target="_blank" rel="noopener" href="http://hertzdevil.info/programs/">http://hertzdevil.info/programs/</a></td>
+</tr>
+<tr>
+<td>FamiStudio</td>
+<td>音乐</td>
+<td>芯片音乐（chiptune）编辑器，可以用它做出像超级玛丽那样的背景音乐。编辑界面相比FamiTracker更加现代化</td>
+<td><a target="_blank" rel="noopener" href="https://famistudio.org/">https://famistudio.org/</a></td>
+</tr>
+<tr>
+<td>SpaceSniffer</td>
+<td>磁盘整理</td>
+<td>一个能扫描磁盘，以帮助整理删除磁盘文件的工具，扫描过程很帅，C盘快满的朋友可以用一下</td>
+<td><a target="_blank" rel="noopener" href="http://www.uderzo.it/main_products/space_sniffer/">http://www.uderzo.it/main_products/space_sniffer/</a></td>
+</tr>
+<tr>
+<td>AutoHotKey</td>
+<td>脚本语言</td>
+<td>简写AHK，直译就是“自动热键”。本质上是一个脚本语言，有一套自己的语法，可以快速写出一些有用的脚本程序</td>
+<td><a target="_blank" rel="noopener" href="https://www.autohotkey.com/">https://www.autohotkey.com/</a></td>
+</tr>
+<tr>
+<td>Capslock+</td>
+<td>效率工具</td>
+<td>一个加强Capslock键（大写锁键）的功能，以提高效率的工具。因为是用AHK写的，所以要先下载AHK才行</td>
+<td><a target="_blank" rel="noopener" href="https://cjkis.me/capslock+/">https://cjkis.me/capslock+/</a></td>
+</tr>
+<tr>
+<td>Golly</td>
+<td>数学</td>
+<td>称为“生命游戏”的数学游戏（可搜索“生命游戏”了解一下），挺有趣的:-)</td>
+<td><a target="_blank" rel="noopener" href="http://golly.sourceforge.net/">http://golly.sourceforge.net/</a></td>
+</tr>
+<tr>
+<td>TranslucentTB</td>
+<td>美化</td>
+<td>可以让工具栏变成透明效果、模糊效果</td>
+<td><a target="_blank" rel="noopener" href="https://github.com/TranslucentTB/TranslucentTB">https://github.com/TranslucentTB/TranslucentTB</a></td>
+</tr>
+<tr>
+<td>XMPlay</td>
+<td>音乐</td>
+<td>一个支持很多格式的音乐播放器，程序界面看上去挺好看的</td>
+<td><a target="_blank" rel="noopener" href="http://www.xmplay.com/">http://www.xmplay.com/</a></td>
+</tr>
+<tr>
+<td>ZType</td>
+<td>游戏</td>
+<td>一个很不错的打字游戏，<a target="_blank" rel="noopener" href="http://xn--fqru53bn7os2drl.xn--pe-0v2cm46g.com">网站后缀是.pe不是.com</a></td>
+<td><a target="_blank" rel="noopener" href="https://zty.pe/">https://zty.pe/</a></td>
+</tr>
+<tr>
+<td>Insert No Coins</td>
+<td>极客动画</td>
+<td>不到64kb的3D动画！</td>
+<td><a target="_blank" rel="noopener" href="https://github.com/razordemo/Insert-No-Coins">https://github.com/razordemo/Insert-No-Coins</a><br/><a target="_blank" rel="noopener" href="https://www.pouet.net/prod.php?which=55991">https://www.pouet.net/prod.php?which=55991</a></td>
+</tr>
+<tr>
+<td>SuperFlight</td>
+<td>游戏</td>
+<td>直译就是“超级飞行”，飞行越贴近地面分数就越高的游戏</td>
+<td><a target="_blank" rel="noopener" href="https://superflightgame.com/">https://superflightgame.com/</a></td>
+</tr>
+<tr>
+<td>One Piece - Grand Battle Swan Colloseum</td>
+<td>怀旧掌机游戏</td>
+<td>WSC掌机上的海贼王格斗游戏，需要下载一个WSC模拟器才能玩</td>
+<td><a target="_blank" rel="noopener" href="https://emulator.games/roms/wonderswan/one-piece-grand-battle-swan-colloseum/">https://emulator.games/roms/wonderswan/one-piece-grand-battle-swan-colloseum/</a></td>
+</tr>
+<tr>
+<td>cmatrix</td>
+<td>Linux命令</td>
+<td>黑客帝国字节流效果模拟，可以假装自己是一个黑客</td>
+<td>$ sudo apt-get install cmatrix<br/>$ cmatrix</td>
+</tr>
+<tr>
+<td>sl</td>
+<td>Linux命令</td>
+<td>火车动画，没什么用</td>
+<td>$ sudo apt-get install sl<br/>$ sl</td>
+</tr>
+<tr>
+<td>thefuck</td>
+<td>Linux命令</td>
+<td>敲错命令的时候可以大喊一声fuck，详细操作请自行百度:-)</td>
+<td>$ sudo apt update<br/>$ sudo apt install python3-dev python3-pip<br/>$ sudo pip3 install thefuck<br/>$ vim ~/.bashrc<br/>$ eval &quot;<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false">(</mo><mi>t</mi><mi>h</mi><mi>e</mi><mi>f</mi><mi>u</mi><mi>c</mi><mi>k</mi><mo>−</mo><mo>−</mo><mi>a</mi><mi>l</mi><mi>i</mi><mi>a</mi><mi>s</mi><mi>f</mi><mi>u</mi><mi>c</mi><mi>k</mi><mo stretchy="false">)</mo><mi mathvariant="normal">&quot;</mi><mo>&lt;</mo><mi>b</mi><mi>r</mi><mi mathvariant="normal">/</mi><mo>&gt;</mo></mrow><annotation encoding="application/x-tex">(thefuck --alias fuck)&quot;&lt;br/&gt;</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord mathnormal">t</span><span class="mord mathnormal">h</span><span class="mord mathnormal">e</span><span class="mord mathnormal" style="margin-right:0.10764em;">f</span><span class="mord mathnormal">u</span><span class="mord mathnormal">c</span><span class="mord mathnormal" style="margin-right:0.03148em;">k</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">−</span><span class="mord mathnormal">a</span><span class="mord mathnormal" style="margin-right:0.01968em;">l</span><span class="mord mathnormal">i</span><span class="mord mathnormal">a</span><span class="mord mathnormal">s</span><span class="mord mathnormal" style="margin-right:0.10764em;">f</span><span class="mord mathnormal">u</span><span class="mord mathnormal">c</span><span class="mord mathnormal" style="margin-right:0.03148em;">k</span><span class="mclose">)</span><span class="mord">&quot;</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">&lt;</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal">b</span><span class="mord mathnormal" style="margin-right:0.02778em;">r</span><span class="mord">/</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">&gt;</span></span></span></span> source ~/.bashrc</td>
+</tr>
+<tr>
+<td>Mindustry</td>
+<td>游戏</td>
+<td>建造资源运输线，建造防御塔，抵御敌人入侵的塔防游戏。steam有售</td>
+<td><a target="_blank" rel="noopener" href="https://anuke.itch.io/mindustry">https://anuke.itch.io/mindustry</a></td>
+</tr>
+<tr>
+<td>Kraftwerk</td>
+<td>乐队</td>
+<td>60年代末的德国前卫摇滚、实验电子</td>
+<td><a target="_blank" rel="noopener" href="http://www.kraftwerk.com/">http://www.kraftwerk.com/</a></td>
+</tr>
+<tr>
+<td>Nazo_Game</td>
+<td>游戏</td>
+<td>运用电脑知识、语言学、梗等等的解谜游戏</td>
+<td><a target="_blank" rel="noopener" href="http://nazo.one-story.cn/">http://nazo.one-story.cn/</a></td>
+</tr>
+<tr>
+<td>EYEZMAZE</td>
+<td>个人游戏网站</td>
+<td>很有趣的游戏网站，站长是一位日本的游戏开发者，Grow系列游戏的制作人</td>
+<td><a target="_blank" rel="noopener" href="http://www.eyezmaze.com/">http://www.eyezmaze.com/</a></td>
+</tr>
+<tr>
+<td><a target="_blank" rel="noopener" href="http://ikyo.ys168.com/">http://ikyo.ys168.com/</a></td>
+<td>怀旧游戏</td>
+<td>里面包含了FC游戏大全，Famitracker汉化之类的东西</td>
+<td><a target="_blank" rel="noopener" href="http://ikyo.ys168.com/">http://ikyo.ys168.com/</a></td>
+</tr>
+<tr>
+<td>donjon</td>
+<td>随机地图生成器</td>
+<td>RPG游戏制作必备！随机世界地图生成器</td>
+<td><a target="_blank" rel="noopener" href="http://donjon.bin.sh/">http://donjon.bin.sh/</a></td>
+</tr>
+<tr>
+<td>TinyPNG</td>
+<td>压图工具</td>
+<td>TinyPNG使用智能有损压缩技术将您的PNG文件的<strong>文件大小降低</strong>。 通过选择性的减少图片中的颜色，只需要很少的字节数就能保存数据。 对视觉的影响几乎不可见，但是在文件大小上有非常大的差别</td>
+<td><a target="_blank" rel="noopener" href="https://tinify.cn/">https://tinify.cn/</a></td>
+</tr>
+<tr>
+<td>DeepL Translate</td>
+<td>深度学习翻译软件</td>
+<td>一家德国科技公司开发的翻译软件。号称强过谷歌翻译，机器翻译在盲测中秒杀同行业产品</td>
+<td><a target="_blank" rel="noopener" href="https://www.deepl.com/translator">https://www.deepl.com/translator</a></td>
+</tr>
+</tbody>
+</table>
+
+  </div>
+  <div>
+  
+  <div class="post-note note-warning copyright" style="margin-top: 42px">
+    <p><span style="font-weight: bold;">作者：</span><a target="_blank" rel="nofollow noopener noreferrer" href="https://numbfish-luo.github.io/about">Numbfish</a></p>
+    <p><span style="font-weight: bold;">文章链接：</span><a target="_blank" rel="nofollow noopener noreferrer" href="https://numbfish-luo.github.io/2021/07/28/recommendations/">https://numbfish-luo.github.io/2021/07/28/recommendations/</a></p>
+    <p><span style="font-weight: bold;">版权声明：</span>本博客所有文章除特别声明外，均采用<a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">CC BY-NC-SA 4.0 协议</a>。转载请注明出处！</p>
+  </div>
+  
+  </div>
+</article>
+<div class="nav">
+  
+  <div class="nav-item-prev">
+    <a href="/2021/07/28/cgj-2021/" class="nav-link">
+      <i class="iconfont icon-left nav-prev-icon"></i>
+      <div>
+        <div class="nav-label">上一篇</div>
+        
+        <div class="nav-title">2021 CiGA Game Jam 椰岛站（上海静安区）作品——《黑we钩》 </div>
+        
+      </div>
+    </a>
+  </div>
+  
+  
+</div>
+
+<div class="card card-content toc-card" id="mobiletoc">
+  <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+
+</div></main>
+          <aside class="left-column">
+            
+            <div class="card card-author">
+              
+<img src="/img/numbfish-icon-000.jpg" class="author-img">
+
+<p class="author-name">Numbfish</p>
+<p class="author-description">程策美全能型TA</p>
+<div class="author-message">
+  <a class="author-posts-count" href="/archives">
+    <span>11</span>
+    <span>文章</span>
+  </a>
+  <a class="author-categories-count" href="/categories">
+    <span>6</span>
+    <span>分类</span>
+  </a>
+  <a class="author-tags-count" href="/tags">
+    <span>0</span>
+    <span>标签</span>
+  </a>
+</div>
+
+            </div>
+            
+            <div class="sticky-tablet">
+  
+  
+  <article class="display-when-two-columns spacer">
+    <div class="card card-content toc-card">
+      <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+
+    </div>
+  </article>
+  
+  
+  <article class="card card-content">
+    <div class="categories-card">
+  <div class="categories-header"><i class="iconfont icon-fenlei" style="padding-right: 2px;"></i>分类</div>
+  <div class="categories-list">
+    
+      <a href="/categories/编程">
+        <div class="categories-list-item">
+          编程
+          <span class="categories-list-item-badge">2</span>
+        </div>
+      </a>
+    
+      <a href="/categories/Unity">
+        <div class="categories-list-item">
+          Unity
+          <span class="categories-list-item-badge">4</span>
+        </div>
+      </a>
+    
+      <a href="/categories/网页">
+        <div class="categories-list-item">
+          网页
+          <span class="categories-list-item-badge">1</span>
+        </div>
+      </a>
+    
+      <a href="/categories/GameJam">
+        <div class="categories-list-item">
+          GameJam
+          <span class="categories-list-item-badge">2</span>
+        </div>
+      </a>
+    
+      <a href="/categories/Shader">
+        <div class="categories-list-item">
+          Shader
+          <span class="categories-list-item-badge">1</span>
+        </div>
+      </a>
+    
+      <a href="/categories/杂项">
+        <div class="categories-list-item">
+          杂项
+          <span class="categories-list-item-badge">1</span>
+        </div>
+      </a>
+    
+  </div>
+</div>
+  </article>
+  
+  <article class="card card-content">
+    <div class="tags-card">
+  <div class="tags-header"><i class="iconfont icon-biaoqian" style="padding-right: 2px;"></i>热门标签</div>
+  <div class="tags-list">
+    
+  </div>
+</div>
+  </article>
+  
+  
+</div>
+          </aside>
+          <aside class="right-column">
+            <div class="sticky-widescreen">
+  
+  
+  <article class="card card-content toc-card">
+    <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+
+  </article>
+  
+  
+  <article class="card card-content">
+    <div class="recent-posts-card">
+  <div class="recent-posts-header"><i class="iconfont icon-wenzhang_huaban" style="padding-right: 2px;"></i>最近文章</div>
+  <div class="recent-posts-list">
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2024-08-04</div>
+        <a href="/2024/08/04/how-to-create-a-blog-with-hexo/"><div class="recent-posts-item-content">如何用hexo创建个人博客</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2022-02-24</div>
+        <a href="/2022/02/24/2d-water/"><div class="recent-posts-item-content">URP自定义后处理特效第二篇：水波扭曲</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2022-02-22</div>
+        <a href="/2022/02/22/dimensional-cut/"><div class="recent-posts-item-content">URP自定义后处理特效第一篇：次元斩！</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2022-02-22</div>
+        <a href="/2022/02/22/urp-custom-post-effect/"><div class="recent-posts-item-content">URP自定义后处理特效第零篇：前期准备</div></a>
+      </div>
+    
+  </div>
+</div>
+  </article>
+  
+  
+</div>
+          </aside>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <footer class="footer">
+  <div class="footer-container">
+    <div>
+      <div class="footer-dsc">
+        <span>Copyright ©
+          
+          2020 -
+          
+          2024
+        </span>
+        <a href="/" class="footer-link">Numbfish的个人博客 </a>
+      </div>
+    </div>
+
+    
+    <div class="footer-dsc">
+      
+      
+      Powered by
+      <a href="https://hexo.io/" class="footer-link" target="_blank" rel="nofollow noopener noreferrer">&nbsp;Hexo </a>
+      
+      
+      <span>&nbsp;|&nbsp;</span>
+      
+      
+      
+      Theme -
+      <a href="https://github.com/theme-kaze" class="footer-link" target="_blank"
+        rel="nofollow noopener noreferrer">&nbsp;Kaze</a>
+      
+    </div>
+    
+    
+    
+    
+</footer>
+  <a role="button" id="scrollbutton" class="basebutton" >
+  <i class="iconfont icon-arrowleft button-icon"></i>
+</a>
+<a role="button" id="menubutton" class="basebutton">
+  <i class="iconfont icon-menu button-icon"></i>
+</a>
+<a role="button" id="popbutton" class="basebutton">
+  <i class="iconfont icon-expand button-icon"></i>
+</a>
+<a role="button" id="darkbutton" class="basebutton darkwidget">
+  <i class="iconfont icon-weather button-icon"></i>
+</a>
+
+  
+  
+  
+
+  
+  
+    
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.css">
+
+  
+
+  
+  
+  <script>
+  var addImgLayout = function () {
+    var img = document.querySelectorAll('.post-content img');
+    var i;
+    for (i = 0; i < img.length; i++) {
+      var wrapper = document.createElement('a');
+      wrapper.setAttribute('data-fslightbox', 'gallery');
+      wrapper.setAttribute('href', img[i].getAttribute('data-src'));
+      wrapper.setAttribute('style', 'width: 100%; display: flex; justify-content: center;');
+      img[i].parentElement.insertBefore(wrapper, img[i]);
+      wrapper.appendChild(img[i]);
+    }
+    refreshFsLightbox();
+  }
+</script>
+<script>loadScript("//cdn.jsdelivr.net/npm/fslightbox@3.1.0/index.min.js", addImgLayout)</script>
+  
+  
+  
+<script src="/js/main.js"></script>
+
+  
+  
+  <script>
+    var addLazyload = function () {
+      var observer = lozad('.lozad', {
+        load: function (el) {
+          el.srcset = el.getAttribute('data-src');
+        },
+        loaded: function (el) {
+          el.classList.add('loaded');
+        }
+      });
+      observer.observe();
+    }
+  </script>
+  <script>loadScript("/js/lib/lozad.min.js", addLazyload)</script>
+  
+  
+</body>
+
+</html>
